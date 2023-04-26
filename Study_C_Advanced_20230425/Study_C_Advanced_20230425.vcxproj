@@ -128,7 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="test-1-数据的存储.c" />
-    <ClCompile Include="test-2-指针进阶.c" />
+    <ClCompile Include="test-2-指针进阶-重点.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

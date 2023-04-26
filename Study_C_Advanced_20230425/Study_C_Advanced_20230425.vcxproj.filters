@@ -18,7 +18,7 @@
     <ClCompile Include="test-1-数据的存储.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test-2-指针进阶.c">
+    <ClCompile Include="test-2-指针进阶-重点.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
