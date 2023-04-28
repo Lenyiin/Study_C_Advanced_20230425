@@ -129,6 +129,9 @@
   <ItemGroup>
     <ClCompile Include="test-1-数据的存储.c" />
     <ClCompile Include="test-2-指针进阶-重点.c" />
+    <ClCompile Include="test-3-字符串函数及模拟实现strlen&amp;&amp;strcpy&amp;&amp;strcat&amp;&amp;strcmp&amp;&amp;strncmp&amp;&amp;strstr&amp;&amp;strtok.c" />
+    <ClCompile Include="test-4-内存函数.c" />
+    <ClCompile Include="test-5-自定义类型.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
