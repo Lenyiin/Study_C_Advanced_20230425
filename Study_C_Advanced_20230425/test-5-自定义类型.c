@@ -2,7 +2,7 @@
 #include<stdio.h>
 
 
-//P144-P
+//P144-P155
 
 
 //本章重点
@@ -497,17 +497,17 @@
 
 
 //联合体大小的计算
-union Un
-{
-	char a[5];
-	int i;
-};
-int main()
-{
-	union Un u;
-	printf("%d\n", sizeof(u));
-	
-	return 0;
-}
+//union Un
+//{
+//	char a[5];
+//	int i;
+//};
+//int main()
+//{
+//	union Un u;
+//	printf("%d\n", sizeof(u));
+//	
+//	return 0;
+//}
 //联合的大小至少是最大成员的大小
 //当最大成员大小不是最大对齐数的整数倍的时候，就要对齐到最大对齐数的整数倍
