@@ -33,5 +33,11 @@
     <ClCompile Include="test-6-动态内存管理.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="test-7-文件操作.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="test-8-程序环境和预处理.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

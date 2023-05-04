@@ -133,6 +133,8 @@
     <ClCompile Include="test-4-内存函数.c" />
     <ClCompile Include="test-5-自定义类型.c" />
     <ClCompile Include="test-6-动态内存管理.c" />
+    <ClCompile Include="test-7-文件操作.c" />
+    <ClCompile Include="test-8-程序环境和预处理.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
