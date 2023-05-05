@@ -94,6 +94,26 @@
 //3.2.4 #和##					可以把参数插入到字符串中
 //		使用#，把一个宏参数变成对应的字符串
 //		##可以把位于它两边的符号合成一个符合，它允许宏定义从分离的文本片段创建标识符。
+//3.2.5 带副作用的宏参数
+//		当宏参数在宏定义中出现超过一次的时候，如果参数带有副作用，那么你在使用这个宏的时候就可能出现危险，导致不可预测的后果。
+//		副作用就是表达式求值的时候出现永久性效果。
+//3.2.6 宏和函数的对比
+//		宏通常被应用于执行简单的运算。比如在两个数中找出较大的一个。
+//	为什么不用函数来完成这个任务？
+//		1.	用于调用函数和从函数返回的代码可能比实际执行这个小型计算工作所需的时间更多。所以宏比函数在程序的规模和速度方面更胜一筹。
+//		2.	更重要的是函数的参数必须申明成特定的类型。所以函数只能在类型合适的表达式上使用。
+//			反之，这个宏则可适用于整型、长整型、浮点型等可以用于>来比较的类型。宏是类型无关的。
+//	宏相比函数的劣势的地方
+//		1.	每次使用宏的时候，一份宏定义的代码将插入到程序中。除非宏比较短，否则可能大幅度增加程序的长度。
+//		2.	宏是没法调试的
+//		3.	宏由于类型无关，也就不够严谨
+//		4.	宏可能会带来运算符优先级的问题，导致程序容易出错。
+//		宏有时候可以做到函数做不到的事情。比如：宏的参数可以出现类型，但是函数做不到。
+//	命名约定
+//		一般来讲，函数和宏的使用语法很相似。所以语言本身没法帮我们区分二者。那我们平时的一个习惯是：
+//			把宏名全部大写
+//			函数名不要全部大写
+
 
 
 //#define M 1000
@@ -172,11 +192,390 @@
 //	return 0;
 //}
 
-#define CAT(X,Y) X##Y
+//#define CAT(X,Y) X##Y
+//int main()
+//{
+//	int class101 = 100;
+//	printf("%d\n", CAT(class, 101));			//这段代码会被替换成		printf("%d\n",  class101);			## 相当于把两个符号连接在一起
+//
+//	return 0;
+//}
+
+
+//带副作用的宏参数
+//#define MAX(X,Y) ((X)>(Y)?(X):(Y))
+//int main()
+//{
+//	int a = 5;
+//	int b = 8;
+//	int m = MAX(a++, b++);						//这段代码会被替换成	int m = ((a++)>(b++)?(a++):(b++));
+//	printf("m=%d\n", m);
+//	printf("a=%d b=%d\n", a,b);
+//
+//	return 0;
+//}
+
+
+//
+//#define MALLOC(num,type) (type*)malloc(num*sizeof(type))
+//int main()
+//{
+//	int* p = MALLOC(10, int);					//这单代码会被替换成	int* p = (int*)malloc(10 * sizeof(int));
+//
+//	return 0;
+//}
+
+
+//内联函数	inline		结合了宏的优点，和函数的优点
+
+
+
+
+
+//3.3 #undef		这条指令用于移除一个宏定义
+
+//#define M 100
+//int main()
+//{
+//	int a = M;
+//
+//	printf("%d\n", M);
+//#undef M						//取消宏定义
+//	return 0;
+//}
+
+
+
+
+//3.4 命令行定义
+//		许多C的编译器提供了一种能力，允许在命令行中定义符号。用于启动编译过程。
+
+//3.5 条件编译
+//		在编译一个程序的时候，我们如果要将一条语句（一组语句）编译或者放弃是很方便的。因为我们有条件编译指令。
+
+//#define PRINT				//定义了这个，下面条件就为真，就会被编译，没定义，下面的条件就为假，就不会被编译
+//int main()
+//{
+//
+//#ifdef PRINT
+//	printf("hehe\n");
+//#endif
+//
+//#ifdef 1					//1为真，就会被编译，0为假，就不会被编译
+//	printf("hehe\n");
+//#endif
+//
+//	return 0;
+//}
+
+
+//多分支的条件编译
+//int main()
+//{
+//
+//#if 1==1					//如果这里为真，执行完这里直接就结束了，下面代码即使为真也不会执行
+//	printf("hehe\n");
+//#elif 2==2					//如果上面代码为假，则会执行这里
+//	printf("haha\n");
+//#else						//如果上面都为假才会执行这里
+//	printf("heihei\n");
+//#endif
+//
+//	return 0;
+//}
+
+
+//判断是否被定义
+//#define TEST
+//#define HEHE
+//int main()
+//{
+//
+//	//如果TEST定义了，下面参与编译
+//#ifdef TEST
+//	printf("test1\n");
+//#endif
+//
+//#if defined(TEST)				//这个和上面那种写法作用相同
+//	printf("test2\n");
+//#endif
+//
+//
+//	//如果HEHE不定义，下面参与编译
+//#ifndef HEHE
+//	printf("hehe1\n");
+//#endif
+//
+//#if !defined(HEHE)				//这个和上面那种写法作用相同
+//	printf("hehe2\n");
+//#endif
+//
+//	return 0;
+//}
+
+
+
+//3.6 文件包含
+//		我们已经知道，#include指令可以使另外一个文件被编译。就像它实际出现于#include指令的地方一样。
+//		这种替换方式很简单：预处理器先删除这条指令，并用包含文件的内容替换。
+//							这样一个源文件被包含10次，那实际被编译10次。
+
+#include<stdlib.h>		//库文件的包含		C语言库中提供的函数的头文件，使用	<	>
+#include"test.h"		//本地文件的包含	自定义的函数头文件，使用	“	”
+
+// < > 和“”查找策略的区别：
+//		“”先在源文件所在目录下查找，如果该头文件未找到，编译器就像查找库函数头文件一样在标准位置查找头文件。如果找不到就提示编译错误
+//		< > 直接去库函数头文件所在的目录下查找
+
+
+#pragma once			//防止头文件重复包含
+
+
+
+
+//4 其他预处理指令
+
+
+
+
+//作业		对齐数设置为4
+//#pragma pack(4)
+//struct A
+//{
+//	int a;
+//	short b;
+//	int c;
+//	char d;
+//};
+//struct B
+//{
+//	int a;
+//	short b;
+//	char c;
+//	int d;
+//};
+//int main()
+//{
+//	struct A sa = { 0 };
+//	struct B sb = { 0 };
+//	printf("%d\n", sizeof(sa));
+//	printf("%d\n", sizeof(sb));
+//
+//	return 0;
+//}
+//#pragma pack()
+
+
+
+//作业			atoi		测试
+//int main()
+//{
+//	char* p = "1234";
+//	int ret = atoi(p);			//将字符串转化成一个整型
+//	printf("%d\n", ret);
+//	return 0;
+//}
+
+//atoi 实现
+//#include<ctype.h>
+//#include<limits.h>
+//enum State
+//{
+//	INVALID,		//0
+//	VALID			//1
+//};
+////state 记录的是 my_stoi 返回的值是合法转化的值，还是非法的状态
+//enum State state = INVALID;
+//
+//int my_atoi(const char* s)
+//{
+//	int flag = 1;
+//	//空指针的问题
+//	if (NULL == s)
+//	{
+//		return 0;
+//	}
+//	//空字符串问题
+//	if (*s == '\0')
+//	{
+//		return 0;
+//	}
+//	//跳过空白字符
+//	while (isspace(*s))		//isspace		#include<ctype.h>
+//	{
+//		s++;
+//	}
+//	//	+/-
+//	if (*s == '+')
+//	{
+//		flag = 1;
+//		s++;
+//	}
+//	else if (*s == '-')
+//	{
+//		flag = -1;
+//		s++;
+//	}
+//	//处理数字字符的转换
+//	long long n = 0;
+//	while (isdigit(*s))
+//	{
+//		n = n * 10 + flag * (*s - '0');
+//		if (n > INT_MAX || n < INT_MIN)			//#include<limits.h>
+//		{
+//			return 0;
+//		}
+//		s++;
+//	}
+//	if (*s == '\0')
+//	{
+//		state = VALID;
+//		return (int)n;
+//	}
+//	else
+//	{
+//		//非数字字符的情况
+//		return (int)n;
+//	}
+//}
+//int main()
+//{
+//	//1.空指针
+//	//2.空字符串
+//	//3.非数字字符
+//	//4.超出范围
+//
+//	const char* p = "    -1234";
+//	int ret = my_atoi(p);
+//	if (state == VALID)
+//	{
+//		printf("正常的转换：%d\n", ret);
+//	}
+//	else
+//	{
+//		printf("非法的转换：%d\n", ret);
+//	}
+//
+//	return 0;
+//}
+
+
+
+//作业
+//一个数组中只有两个数字是出现一次，其他所有数字都出现了两次
+//编写一个函数找出这两个只出现一次的数字
+//1 2 3 4 5 6 1 2 3 4
+
+//void Find(int arr[], int sz, int* x, int* y)
+//{
+//	//1.要把所有数字异或
+//	int i = 0;
+//	int ret = 0;
+//	for (i = 0; i < sz; i++)
+//	{
+//		ret ^= arr[i];
+//	}
+//	//2.计算ret的哪一位为1
+//	//ret=3		011
+//	int pos = 0;
+//	for (i = 0; i < 32; i++)
+//	{
+//		if (((ret >> i) & 1) == 1)
+//		{
+//			pos = i;
+//			break;
+//		}
+//	}
+//	//把从低位到高位的第pos位为1，为0的放在另一组
+//	int num1 = 0;
+//	int num2 = 0;
+//	for (i = 0; i < sz; i++)
+//	{
+//		if (((arr[i] >> pos) & 1) == 1)
+//		{
+//			num1 ^= arr[i];
+//		}
+//		else
+//		{
+//			num2 ^= arr[i];
+//		}
+//	}
+//	*x = num1;
+//	*y = num2;
+//}
+//int main()
+//{
+//	int arr[] = { 1,2,3,4,5,6,1,2,3,4 };
+//	//找出这两个只出现一次的数字
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	int x = 0;
+//	int y = 0;
+//	Find(arr, sz, &x, &y);
+//	printf("%d %d\n", x, y);
+//
+//	return 0;
+//}
+
+
+
+//头文件的包含
+//类型的定义
+//函数的申明
+
+
+
+//作业
+//写一个宏，可以将一个整数的二进制位的奇数位和偶数位交换
+//#define SWAP(N) (((N & 0xaaaaaaaa) >> 1) + ((N & 0x55555555) << 1))
+//int main()
+//{
+//	
+//	//
+//	int num = 10;
+//
+//	int ret = SWAP(num);
+//	printf("%d\n", ret);
+//	return 0;
+//}
+
+
+
+//作业
+//写一个宏,计算结构体中某变量相对首地址的偏移，并给出说明。
+//offsetof	测试
+#include<stddef.h>
+//struct A
+//{
+//	int a;
+//	short b;
+//	int c;
+//	char d;
+//};
+//int main()
+//{
+//	printf("%d\n", offsetof(struct A, a));
+//	printf("%d\n", offsetof(struct A, b));
+//	printf("%d\n", offsetof(struct A, c));
+//	printf("%d\n", offsetof(struct A, d));
+//
+//	return 0;
+//}
+
+
+//offsetof 实现
+#define OFFSETOF(struct_name,mem_name) (int)&(((struct_name*)0)->mem_name)
+struct A
+{
+	int a;
+	short b;
+	int c;
+	char d;
+};
 int main()
 {
-	int class101 = 100;
-	printf("%d\n", CAT(class, 101));			//这段代码会被替换成		printf("%d\n",  class101);			## 相当于把两个符号连接在一起
-
+	printf("%d\n", OFFSETOF(struct A, a));
+	printf("%d\n", OFFSETOF(struct A, b));
+	printf("%d\n", OFFSETOF(struct A, c));
+	printf("%d\n", OFFSETOF(struct A, d));
 	return 0;
 }

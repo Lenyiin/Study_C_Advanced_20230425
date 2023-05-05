@@ -136,6 +136,9 @@
     <ClCompile Include="test-7-文件操作.c" />
     <ClCompile Include="test-8-程序环境和预处理.c" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="test.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
