@@ -79,6 +79,13 @@
 //	return 0;
 //}
 
+//int main()
+//{
+//	printf("%s\n", __STDC__);
+//
+//	return 0;
+//}
+
 //3.2 #define
 //3.2.1	#define定义标识符
 //		#define是定义符号的
@@ -120,6 +127,8 @@
 //#define reg register			//将register 定义成reg
 //#define do_forever for(;;)		//定义一个死循环
 //#define CASE break;case
+//#define STR "hello world"
+//#define print printf("你好")	// 也不建议加分号
 //
 //int main()
 //{
@@ -127,37 +136,42 @@
 //	int m = M;
 //	printf("%d\n", m);
 //
-//	do_forever;
+//	printf("%s\n", STR);
+//
+//	print;
+//
+//	//do_forever;
 //
 //	int n = 0;
 //	switch (n)
 //	{
-//	case 1:
-//	CASE 2:
-//	CASE 3:
+//	case 1 :
+//	CASE 2 :
+//	CASE 3 : ;
 //	}
 //
 //	return 0;
 //}
 
 //#define 定义宏
-//#define SQUARE(X) X*X						//为了严谨起见，应将宏写成	#define SQUARE(X) （（X）*（X））
+//#define SQUARE(X) X*X				// 为了严谨起见，应将宏写成	#define SQUARE(X) （（X）*（X））
 //int main()
 //{
-//	printf("%d\n", SQUARE(3));				//这段代码会被替换成	printf("%d\n", 3*3);
+//	printf("%d\n", SQUARE(3));		// 这段代码会被替换成	printf("%d\n", 3*3);
 //
-//	printf("%d\n", SQUARE(3+1));			//这段代码会被替换成	printf("%d\n", 3+1*3+1);	结果是7
+//	printf("%d\n", SQUARE(3+1));	// 这段代码会被替换成	printf("%d\n", 3+1*3+1);	结果是7
 //
 //	return 0;
 //}
-//宏的参数是不仅过任何计算，直接就传进去了
+// 宏的参数是不经过任何计算，直接就传进去了
 
-//#define DOUBLE(X) (X)+(X)					////为了严谨起见，应将宏写成	#define DOUBLE(X) （(X)+(X)）
+//#define SQUARE(X) ((X)*(X))
+//#define DOUBLE(X) (X)+(X)			// 为了严谨起见，应将宏写成	#define DOUBLE(X) （(X)+(X)）
 //int main()
 //{
-//	printf("%d\n", 10*DOUBLE(4));			//这段代码会被替换成	printf("%d\n", 10*4+4);		结果是44
+//	printf("%d\n", 10*DOUBLE(4));	// 这段代码会被替换成	printf("%d\n", 10*(4+4));	结果是44
 //
-//	printf("%d\n", SQUARE(3 + 1));			//这段代码会被替换成	printf("%d\n", 3+1*3+1);	结果是7
+//	printf("%d\n", SQUARE(3 + 1));	// 这段代码会被替换成	printf("%d\n", (3+1)*(3+1));结果是16
 //
 //	return 0;
 //}
@@ -167,19 +181,22 @@
 //#define MAX(X,Y) ((X)>(Y)?(X):(Y))
 //int main()
 //{
-//	int max = MAX(101, M);
+//	int max = MAX(99, M);
+//	printf("%d\n", max);
+//
 //	return 0;
 //}
 
-
+//// 在X前面加上#，X的参数不会替换成他本身，而是会转换成她所对应的字符串
 //#define PRINT(X,FORMAT) printf("the value of "#X" is "FORMAT"\n",X)
+//
 //int main()
 //{
 //	printf("hello world\n");
-//	printf("hello " "world\n");			//写法不同，但是这两个“”引号的字符串会天然连接到一起
+//	printf("hello " "world\n");	// 写法不同，但是这两个“”引号的字符串会天然连接到一起
 //
 //	int a = 10;
-//	PRINT(a,"%d");							//这段代码会被替换成	printf("the value of "“a”" is %d\n",a)
+//	PRINT(a,"%d");				// 这段代码会被替换成	printf("the value of "“a”" is %d\n",a)
 //
 //	int b = 20;
 //	PRINT(b, "%d");
@@ -196,31 +213,35 @@
 //int main()
 //{
 //	int class101 = 100;
-//	printf("%d\n", CAT(class, 101));			//这段代码会被替换成		printf("%d\n",  class101);			## 相当于把两个符号连接在一起
+//	printf("%d\n", CAT(class, 101));	// 这段代码会被替换成		printf("%d\n",  class101);
+//										// ## 相当于把两个符号连接在一起
 //
 //	return 0;
 //}
 
 
-//带副作用的宏参数
+//// 带副作用的宏参数
 //#define MAX(X,Y) ((X)>(Y)?(X):(Y))
 //int main()
 //{
-//	int a = 5;
-//	int b = 8;
-//	int m = MAX(a++, b++);						//这段代码会被替换成	int m = ((a++)>(b++)?(a++):(b++));
-//	printf("m=%d\n", m);
-//	printf("a=%d b=%d\n", a,b);
+//	int a = 5;	// 6 7
+//	int b = 4;	// 5
+//	int m = MAX(a++, b++);
+//	// 这段代码会被替换成	int m = ((a++)>(b++)?(a++):(b++));
+//	//							6		5 > 4	？ 6
+//
+//	printf("m=%d\n", m);		// 6
+//	printf("a=%d b=%d\n", a,b);	// 7 5
 //
 //	return 0;
 //}
 
 
-//
+
 //#define MALLOC(num,type) (type*)malloc(num*sizeof(type))
 //int main()
 //{
-//	int* p = MALLOC(10, int);					//这单代码会被替换成	int* p = (int*)malloc(10 * sizeof(int));
+//	int* p = MALLOC(10, int);	// 这单代码会被替换成	int* p = (int*)malloc(10 * sizeof(int));
 //
 //	return 0;
 //}
@@ -253,7 +274,7 @@
 //3.5 条件编译
 //		在编译一个程序的时候，我们如果要将一条语句（一组语句）编译或者放弃是很方便的。因为我们有条件编译指令。
 
-//#define PRINT				//定义了这个，下面条件就为真，就会被编译，没定义，下面的条件就为假，就不会被编译
+//#define PRINT		// 定义了这个，下面条件就为真，就会被编译，没定义，下面的条件就为假，就不会被编译
 //int main()
 //{
 //
@@ -261,15 +282,40 @@
 //	printf("hehe\n");
 //#endif
 //
-//#ifdef 1					//1为真，就会被编译，0为假，就不会被编译
+//#ifdef 1			// 1为真，就会被编译，0为假，就不会被编译
 //	printf("hehe\n");
 //#endif
 //
 //	return 0;
 //}
 
+//#define __DEBUG__
+//int main()
+//{
+//	int i = 0;
+//	int arr[10] = { 0 };
+//	for (i = 0; i < 10; i++)
+//	{
+//		arr[i] = i;
+//#ifdef __DEBUG__
+//		printf("%d ", arr[i]);
+//#endif
+//	}
+//
+//	return 0;
+//}
 
-//多分支的条件编译
+//#define __DEBUG__ 1
+//int main()
+//{
+//#if __DEBUG__			// 1为真，就会被编译，0为假，就不会被编译
+//	printf("hehe");
+//#endif
+//
+//	return 0;
+//}
+
+//// 多分支的条件编译
 //int main()
 //{
 //
@@ -285,34 +331,47 @@
 //}
 
 
-//判断是否被定义
+//// 判断是否被定义
 //#define TEST
 //#define HEHE
+//
 //int main()
 //{
-//
-//	//如果TEST定义了，下面参与编译
+//	// 如果TEST定义了，下面参与编译
 //#ifdef TEST
 //	printf("test1\n");
 //#endif
 //
-//#if defined(TEST)				//这个和上面那种写法作用相同
+//#if defined(TEST)		// 这个和上面那种写法作用相同
 //	printf("test2\n");
 //#endif
 //
 //
-//	//如果HEHE不定义，下面参与编译
+//	// 如果HEHE不定义，下面参与编译
 //#ifndef HEHE
 //	printf("hehe1\n");
 //#endif
 //
-//#if !defined(HEHE)				//这个和上面那种写法作用相同
+//#if !defined(HEHE)		// 这个和上面那种写法作用相同
 //	printf("hehe2\n");
 //#endif
 //
 //	return 0;
 //}
 
+//// 嵌套指令
+//#if defined(OS_UNIX)
+//	#ifdef OPTION1
+//		unix_version_option1();
+//	#endif
+//	#ifdef OPTION2
+//		unix_version_option2();
+//	#endif
+//#elif defined(OS_MSDOS)
+//	#ifdef OPTION3
+//		unix_version_option3();
+//	#endif
+//#endif
 
 
 //3.6 文件包含
@@ -334,11 +393,42 @@
 
 
 //4 其他预处理指令
+//#include<stddef.h>
+//#define OFFSETOF(struct_name,mem_name) (size_t)&(((struct_name*)0)->mem_name)
+//struct A
+//{
+//	char c1;
+//	int i;
+//	char c2;
+//};
+//int main()
+//{
+//	printf("%d\n", OFFSETOF(struct A, c1));
+//	printf("%d\n", OFFSETOF(struct A, i));
+//	printf("%d\n", OFFSETOF(struct A, c2));
+//
+//	return 0;
+//}
+
+
+//struct A
+//{
+//	char c1;
+//	int i;
+//	char c2;
+//};
+//int main()
+//{
+//	printf("%d\n", offsetof(struct A, c1));
+//	printf("%d\n", offsetof(struct A, i));
+//	printf("%d\n", offsetof(struct A, c2));
+//
+//	return 0;
+//}
 
 
 
-
-//作业		对齐数设置为4
+//// 作业		对齐数设置为4
 //#pragma pack(4)
 //struct A
 //{
@@ -371,37 +461,38 @@
 //int main()
 //{
 //	char* p = "1234";
-//	int ret = atoi(p);			//将字符串转化成一个整型
+//	int ret = atoi(p);		// 将字符串转化成一个整型
 //	printf("%d\n", ret);
 //	return 0;
 //}
 
-//atoi 实现
+//// atoi 实现
 //#include<ctype.h>
 //#include<limits.h>
+//
 //enum State
 //{
-//	INVALID,		//0
-//	VALID			//1
+//	INVALID,		// 0
+//	VALID			// 1
 //};
-////state 记录的是 my_stoi 返回的值是合法转化的值，还是非法的状态
+//// state 记录的是 my_stoi 返回的值是合法转化的值，还是非法的状态
 //enum State state = INVALID;
 //
 //int my_atoi(const char* s)
 //{
 //	int flag = 1;
-//	//空指针的问题
+//	// 空指针的问题
 //	if (NULL == s)
 //	{
 //		return 0;
 //	}
-//	//空字符串问题
+//	// 空字符串问题
 //	if (*s == '\0')
 //	{
 //		return 0;
 //	}
-//	//跳过空白字符
-//	while (isspace(*s))		//isspace		#include<ctype.h>
+//	// 跳过空白字符
+//	while (isspace(*s))		// isspace		#include<ctype.h>
 //	{
 //		s++;
 //	}
@@ -416,12 +507,12 @@
 //		flag = -1;
 //		s++;
 //	}
-//	//处理数字字符的转换
+//	// 处理数字字符的转换
 //	long long n = 0;
 //	while (isdigit(*s))
 //	{
 //		n = n * 10 + flag * (*s - '0');
-//		if (n > INT_MAX || n < INT_MIN)			//#include<limits.h>
+//		if (n > INT_MAX || n < INT_MIN)		// #include<limits.h>
 //		{
 //			return 0;
 //		}
@@ -434,16 +525,17 @@
 //	}
 //	else
 //	{
-//		//非数字字符的情况
+//		// 非数字字符的情况
 //		return (int)n;
 //	}
 //}
+//
 //int main()
 //{
-//	//1.空指针
-//	//2.空字符串
-//	//3.非数字字符
-//	//4.超出范围
+//	// 1.空指针
+//	// 2.空字符串
+//	// 3.非数字字符
+//	// 4.超出范围
 //
 //	const char* p = "    -1234";
 //	int ret = my_atoi(p);
@@ -468,15 +560,15 @@
 
 //void Find(int arr[], int sz, int* x, int* y)
 //{
-//	//1.要把所有数字异或
+//	// 1.要把所有数字异或
 //	int i = 0;
 //	int ret = 0;
 //	for (i = 0; i < sz; i++)
 //	{
 //		ret ^= arr[i];
 //	}
-//	//2.计算ret的哪一位为1
-//	//ret=3		011
+//	// 2.计算ret的哪一位为1
+//	// ret=3		011
 //	int pos = 0;
 //	for (i = 0; i < 32; i++)
 //	{
@@ -486,7 +578,7 @@
 //			break;
 //		}
 //	}
-//	//把从低位到高位的第pos位为1，为0的放在另一组
+//	// 把从低位到高位的第pos位为1，为0的放在另一组
 //	int num1 = 0;
 //	int num2 = 0;
 //	for (i = 0; i < sz; i++)
@@ -503,10 +595,11 @@
 //	*x = num1;
 //	*y = num2;
 //}
+//
 //int main()
 //{
 //	int arr[] = { 1,2,3,4,5,6,1,2,3,4 };
-//	//找出这两个只出现一次的数字
+//	// 找出这两个只出现一次的数字
 //	int sz = sizeof(arr) / sizeof(arr[0]);
 //	int x = 0;
 //	int y = 0;
@@ -517,6 +610,13 @@
 //}
 
 
+//#define INT_PTR int*
+//typedef int* int_ptr;
+//
+//INT_PTR a, b;		// a 的类型是 int*，b 的类型是 int
+//int_ptr a, b;		// a b 的类型都是 int*
+
+
 
 //头文件的包含
 //类型的定义
@@ -525,16 +625,16 @@
 
 
 //作业
-//写一个宏，可以将一个整数的二进制位的奇数位和偶数位交换
+//// 写一个宏，可以将一个整数的二进制位的奇数位和偶数位交换
 //#define SWAP(N) (((N & 0xaaaaaaaa) >> 1) + ((N & 0x55555555) << 1))
+//
 //int main()
 //{
-//	
-//	//
 //	int num = 10;
 //
 //	int ret = SWAP(num);
 //	printf("%d\n", ret);
+//
 //	return 0;
 //}
 
@@ -542,8 +642,8 @@
 
 //作业
 //写一个宏,计算结构体中某变量相对首地址的偏移，并给出说明。
-//offsetof	测试
-#include<stddef.h>
+// offsetof	测试
+//#include<stddef.h>
 //struct A
 //{
 //	int a;
@@ -564,18 +664,18 @@
 
 //offsetof 实现
 #define OFFSETOF(struct_name,mem_name) (int)&(((struct_name*)0)->mem_name)
-struct A
-{
-	int a;
-	short b;
-	int c;
-	char d;
-};
-int main()
-{
-	printf("%d\n", OFFSETOF(struct A, a));
-	printf("%d\n", OFFSETOF(struct A, b));
-	printf("%d\n", OFFSETOF(struct A, c));
-	printf("%d\n", OFFSETOF(struct A, d));
-	return 0;
-}
+//struct A
+//{
+//	int a;
+//	short b;
+//	int c;
+//	char d;
+//};
+//int main()
+//{
+//	printf("%d\n", OFFSETOF(struct A, a));
+//	printf("%d\n", OFFSETOF(struct A, b));
+//	printf("%d\n", OFFSETOF(struct A, c));
+//	printf("%d\n", OFFSETOF(struct A, d));
+//	return 0;
+//}

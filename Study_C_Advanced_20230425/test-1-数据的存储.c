@@ -38,6 +38,10 @@ int
 long
 	unsigned long [int]
 	signed long [int]
+long long 
+	unsigned long long [int]
+	signed long long [int]
+
 */
 
 //浮点数家族
@@ -53,6 +57,10 @@ double
 //union		联合体
 
 //指针类型
+//int* pi;
+//char * pc;
+//float* pf;
+//void* pv;
 
 //空类型
 //void		
@@ -121,6 +129,7 @@ double
 //	char* p = (char*)&a;
 //	return *p;				//返回1表示大端，返回0表示小端
 //}
+//
 //int main()
 //{
 //	int ret = check_sys();
@@ -132,6 +141,7 @@ double
 //	{
 //		printf("大端\n");
 //	}
+//
 //	return 0;
 //}
 
@@ -143,7 +153,7 @@ double
 //	//10000000 00000000 00000000 00000001		
 //	//11111111 11111111 11111111 11111110
 //	//11111111 11111111 11111111 11111111		整型提升
-//	//11111111									最后a里面存的是这个
+//	//							 11111111		发生截断，最后a里面存的是这个
 //	//11111111 11111111 11111111 11111111		打印的时候，负数整型提升，高位补1
 //
 //	signed char b = -1;
@@ -155,7 +165,7 @@ double
 //	//00000000 00000000 00000000 11111111		整数补码翻译成原码相同
 //
 //	//abc里存放的东西都一样，但是，理解不一样
-//	printf("a=%d,b=%d,c=%d", a, b, c);
+//	printf("a=%d,b=%d,c=%d", a, b, c);			// %d 打印的是有符号的整形
 //	return 0;
 //}
 
@@ -174,13 +184,13 @@ double
 //	//10000000 00000000 00000000 10000000		原码
 //	//11111111 11111111 11111111 01111111		反码
 //	//11111111 11111111 11111111 10000000		补码
-//	//10000000									存储
+//	//							 10000000		存储
 //	//11111111 11111111 11111111 10000000		打印时，先整型提升，%u为无符号数，因此前面那个1不作为符号位
 //	printf("%u\n", a);
 //
 //	char b = 128;
 //	//00000000 00000000 00000000 10000000		原码、反码、补码
-//	//10000000									存储
+//	//							 10000000		存储
 //	//11111111 11111111 11111111 10000000		打印时，先整型提升，%u为无符号数，因此前面那个1不作为符号位
 //	printf("%u\n", b);
 //	return 0;
@@ -244,7 +254,16 @@ double
 //	return 0;
 //}
 
-
+//#include <string.h>
+//int main()
+//{
+//	if (strlen("abc") - strlen("abcdef") >= 0)
+//		printf(">\n");
+//	else
+//		printf("<\n");
+//
+//	return 0;
+//}
 
 
 //浮点型在内存中的存储
@@ -332,5 +351,78 @@ double
 //	//0 10000010 00100000000000000000000
 //	printf("num的值为：%d\n", n);						//n --> 01000001 00010000 00000000 00000000
 //	printf("*pFloat的值为：%f\n", *pFloat);
+//	return 0;
+//}
+
+//void move_odd_even(int arr[], int sz)
+//{
+//	int left = 0;
+//	int right = sz - 1;
+//	while (left < right)
+//	{
+//		// 从左往右找偶数
+//		while (left < right && arr[left] % 2 != 0)
+//		{
+//			left++;
+//		}
+//		// 从右往左找奇数
+//		while (left < right && arr[right] % 2 == 0)
+//		{
+//			right--;
+//		}
+//		// 交换
+//		if (left < right)
+//		{
+//			int tmp = arr[left];
+//			arr[left] = arr[right];
+//			arr[right] = tmp;
+//		}
+//	}
+//}
+//
+//int main()
+//{
+//	int arr[10] = { 0 };
+//
+//	// 输入
+//	int i = 0;
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	for(i=0; i < sz; i++)
+//	{
+//		// scanf("%d", &arr[i]);
+//		scanf("%d", arr + i);
+//	}
+//
+//	// 调整
+//	move_odd_even(arr, sz);
+//	//int left = 0;
+//	//int right = sz - 1;
+//	//while (left < right)
+//	//{
+//	//	if (arr[left] % 2 == 0)
+//	//	{
+//	//		if (arr[right] % 2 != 0)
+//	//		{
+//	//			int tmp = arr[left];
+//	//			arr[left] = arr[right];
+//	//			arr[right] = tmp;
+//	//		}
+//	//		else
+//	//		{
+//	//			right--;
+//	//		}
+//	//	}
+//	//	else
+//	//	{
+//	//		left++;
+//	//	}
+//	//}
+//
+//	// 输出
+//	for (i = 0; i < sz; i++)
+//	{
+//		printf("%d ", arr[i]);
+//	}
+//
 //	return 0;
 //}

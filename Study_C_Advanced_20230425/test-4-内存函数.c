@@ -24,22 +24,29 @@ isprint				ÈÎºÎ¿É´òÓ¡×Ö·û£¬°üº¬Í¼ĞÎ×Ö·ûºÍ¿Õ°××Ö·û
 
 */
 
+//#include <ctype.h>
 //int main()
 //{
-//	char ch = 'a';
+//	int a = isspace(' ');
+//	int b = isspace('w');
+//	printf("%d\n", a);		// 8	·ÇÁã
+//	printf("%d\n", b);		// 0
 //
-//	//isdigit	Èç¹ûÊÇÊı×Ö×Ö·û£¬·µ»Ø·Ç0µÄÖµ£¨4£©£¬Èç¹û²»ÊÇÊı×Ö×Ö·û£¬·µ»Ø0
-//	//int ret = isdigit(ch);			//isdigit() --> #include<ctype.h>
-//	
-//	//islower	Èç¹ûÊÇĞ¡Ğ´×Ö·û£¬·µ»Ø·Ç0µÄÖµ£¨2£©£¬Èç¹û²»ÊÇĞ¡Ğ´×Ö·û£¬·µ»Ø0
+//	// isdigit	Èç¹ûÊÇÊı×Ö×Ö·û£¬·µ»Ø·Ç0µÄÖµ£¨4£©£¬Èç¹û²»ÊÇÊı×Ö×Ö·û£¬·µ»Ø0
+//	int c = isdigit('3');
+//	int d = isdigit('w');
+//	printf("%d\n", c);		// 4	·ÇÁã
+//	printf("%d\n", d);		// 0
+//
+//	// islower	Èç¹ûÊÇĞ¡Ğ´×Ö·û£¬·µ»Ø·Ç0µÄÖµ£¨2£©£¬Èç¹û²»ÊÇĞ¡Ğ´×Ö·û£¬·µ»Ø0
 //	int ret = islower(ch);
+//	printf("%d\n", ret);
 //
+//	char ch = 'a';
 //	if (ch >= 'A' && ch <= 'Z')
 //	{
-//		//ÕâÖÖÅĞ¶ÏÊÇ²»ÊÇ´óĞ´×Ö·ûÒ²¿ÉÒÔ
+//		// ÕâÖÖÅĞ¶ÏÊÇ²»ÊÇ´óĞ´×Ö·ûÒ²¿ÉÒÔ
 //	}
-//
-//	printf("%d\n", ret);
 //
 //	return 0;
 //}
@@ -87,13 +94,13 @@ void* memcpy(void* destination, const void* source, size_t num);		//void*		ÎŞ¾ßÌ
 //{
 //	int arr1[10] = { 1,2,3,4,5,6,7,8,9,10 };
 //	int arr2[10] = { 0 };
-//	//strcpy()			¿½±´×Ö·û´®µÄ
-//	//char* strcpy(char* dest,const char* src)
-//	//strcpy Óöµ½ '\0' ¾ÍÍ£Ö¹ÁË
+//	// strcpy()			¿½±´×Ö·û´®µÄ
+//	// char* strcpy(char* dest,const char* src)
+//	// strcpy Óöµ½ '\0' ¾ÍÍ£Ö¹ÁË
 //
-//
-//	//Òò´ËÆÈÇĞĞèÒªÄÚ´æ¿½±´£¬¿ÉÒÔ¿½±´ÈÎºÎÀàĞÍ
+//	// Òò´ËÆÈÇĞĞèÒªÄÚ´æ¿½±´£¬¿ÉÒÔ¿½±´ÈÎºÎÀàĞÍ
 //	memcpy(arr2, arr1, 20);
+//
 //	return 0;
 //}
 
@@ -106,12 +113,13 @@ void* memcpy(void* destination, const void* source, size_t num);		//void*		ÎŞ¾ßÌ
 //
 //	while(num--)
 //	{
-//		*(char*)dest = *(char*)src;			//(char*)	Ç¿ÖÆÀàĞÍ×ª»»ÊÇÒ»ÖÖÁÙÊ±×´Ì¬
-//		dest = (char*)dest + 1;				//ËùÒÔÖ»ÄÜÓÃÕâÖÖ·½Ê½
+//		*(char*)dest = *(char*)src;		// (char*)	Ç¿ÖÆÀàĞÍ×ª»»ÊÇÒ»ÖÖÁÙÊ±×´Ì¬
+//		dest = (char*)dest + 1;			// ËùÒÔÖ»ÄÜÓÃÕâÖÖ·½Ê½
 //		src = (char*)src + 1;
 //	}
 //	return ret;
 //}
+//
 //int main()
 //{
 //	int arr1[10] = { 1,2,3,4,5,6,7,8,9,10 };
@@ -125,7 +133,15 @@ void* memcpy(void* destination, const void* source, size_t num);		//void*		ÎŞ¾ßÌ
 //	return 0;
 //}
 
-//memmove	ÊµÏÖ
+//int main()
+//{
+//	int arr1[10] = { 1,2,3,4,5,6,7,8,9,10 };
+//	memmove(arr1+3, arr1, 20);
+//
+//	return 0;
+//}
+
+//// memmove	ÊµÏÖ
 //void* my_memmove(void* dest, const void* src, size_t num)
 //{
 //	void* ret = dest;
@@ -133,17 +149,17 @@ void* memcpy(void* destination, const void* source, size_t num);		//void*		ÎŞ¾ßÌ
 //
 //	if (dest < src)
 //	{
-//		//Ç° --> ºó
+//		// Ç° --> ºó
 //		while (num--)
 //		{
-//			*(char*)dest = *(char*)src;			//(char*)	Ç¿ÖÆÀàĞÍ×ª»»ÊÇÒ»ÖÖÁÙÊ±×´Ì¬
-//			dest = (char*)dest + 1;				//ËùÒÔÖ»ÄÜÓÃÕâÖÖ·½Ê½
+//			*(char*)dest = *(char*)src;		// (char*)	Ç¿ÖÆÀàĞÍ×ª»»ÊÇÒ»ÖÖÁÙÊ±×´Ì¬
+//			dest = (char*)dest + 1;			// ËùÒÔÖ»ÄÜÓÃÕâÖÖ·½Ê½
 //			src = (char*)src + 1;
 //		}
 //	}
 //	else
 //	{
-//		//ºó --> Ç°
+//		// ºó --> Ç°
 //		while (num--)
 //		{
 //			*((char*)dest + num) = *((char*)src + num);
@@ -151,6 +167,7 @@ void* memcpy(void* destination, const void* source, size_t num);		//void*		ÎŞ¾ßÌ
 //	}
 //	return ret;
 //}
+//
 //int main()
 //{
 //	int arr1[10] = { 1,2,3,4,5,6,7,8,9,10 };
@@ -158,8 +175,8 @@ void* memcpy(void* destination, const void* source, size_t num);		//void*		ÎŞ¾ßÌ
 //
 //	//my_memcpy(arr2, arr1, 20);
 //
-//	//my_memcpy(arr1+2, arr1, 20);			//memcpy×Ô¼º¿½±´×Ô¼º£¬Èç¹ûÓĞÖØµşµÄÇøÓò£¬»á³öÏÖÎÊÌâ£¬
-//	my_memmove(arr1 + 2, arr1, 20);				//memmove×Ô¼º¿½±´×Ô¼º£¬Èç¹ûÓĞÖØµşµÄÇøÓò£¬ÄÜÕı³£Ê¹ÓÃ£¬
+//	//my_memcpy(arr1+2, arr1, 20);			// memcpy×Ô¼º¿½±´×Ô¼º£¬Èç¹ûÓĞÖØµşµÄÇøÓò£¬»á³öÏÖÎÊÌâ£¬
+//	my_memmove(arr1 + 2, arr1, 20);			// memmove×Ô¼º¿½±´×Ô¼º£¬Èç¹ûÓĞÖØµşµÄÇøÓò£¬ÄÜÕı³£Ê¹ÓÃ£¬
 //
 //	return 0;
 //}
@@ -168,27 +185,76 @@ void* memcpy(void* destination, const void* source, size_t num);		//void*		ÎŞ¾ßÌ
 
 
 
-//memcmp			ÄÚ´æ±È½Ï
-//int memcmp(const void* ptr1, const void* ptr2, size_t num);
+// memcmp			ÄÚ´æ±È½Ï
+// int memcmp(const void* ptr1, const void* ptr2, size_t num);
 //int main()
 //{
-//	float arr1[] = { 1.0,2.0,3.0,4.0 };
-//	float arr2[] = { 1.0,3.0 };
+//	int arr1[] = { 1,2,3,4,5,6,7,8 };
+//	int arr2[] = { 1,2,2 };
 //
-//	int ret = memcmp(arr1, arr2, 8);
-//	//memcmp  ºÍ  strcmp Éè¼ÆµÄºÜÏàËÆ£¬ÏàµÈ·µ»Ø 0 £¬´óÓÚ·µ»Ø´óÓÚÁãµÄÊı×Ö£¬Ğ¡ÓÚ·µ»ØĞ¡ÓÚÁãµÄÊı×Ö
+//	int ret = memcmp(arr1, arr2, 12);
+//	// memcmp  ºÍ  strcmp Éè¼ÆµÄºÜÏàËÆ£¬ÏàµÈ·µ»Ø 0 £¬´óÓÚ·µ»Ø´óÓÚÁãµÄÊı×Ö£¬Ğ¡ÓÚ·µ»ØĞ¡ÓÚÁãµÄÊı×Ö
 //
 //	printf("%d\n", ret);
 //
 //	return 0;
 //}
 
+//// memcmp	Ä£ÄâÊµÏÖ
+//int my_memcmp(const void* ptr1, const void* ptr2, size_t num)
+//{
+//	char* p1 = (char*)ptr1;
+//	char* p2 = (char*)ptr2;
+//	while (num--)
+//	{
+//		if (*p1 != *p2)
+//		{
+//			return *p1 - *p2;
+//		}
+//		p1++;
+//		p2++;
+//	}
+// 
+//	return 0;
+//}
+//
+//int main()
+//{
+//	int arr1[] = { 1,2,3,4,5,6,7,8 };
+//	int arr2[] = { 1,2,2 };
+//
+//	int ret = my_memcmp(arr1, arr2, 12);
+//	printf("%d\n", ret);
+//
+//	return 0;
+//}
 
 //memset			ÄÚ´æÉèÖÃ
 //void* memset(void* ptr, int value, size_t num);		//½«³õÊ¼µÄptrÖ¸ÏòµÄÄÚ´æ¿éµÄnum¸öµ¥Ôª£¬ÉèÖÃ³ÉvalueÖµ
 //int main()
 //{
 //	int arr[10] = { 0 };
-//	memset(arr, 1, 20);								//memset ÌØµã£¬ÒÔ×Ö½ÚÎªµ¥Î»ÉèÖÃÄÚ´æµÄ
+//	memset(arr, 1, 20);			// memset ÌØµã£¬ÒÔ×Ö½ÚÎªµ¥Î»ÉèÖÃÄÚ´æµÄ
+//	return 0;
+//}
+
+////memset	Ä£ÄâÊµÏÖ
+//void* my_memset(void* ptr, int value, size_t num)
+//{
+//	assert(ptr);
+//	char* ret = (char*)ptr;
+//	while (num--)
+//	{
+//		*ret = (char)value;
+//		ret++;
+//	}
+//	return ptr;
+//}
+//
+//int main()
+//{
+//	int arr[10] = { 0 };
+//	my_memset(arr, 1, 20);			// memset ÌØµã£¬ÒÔ×Ö½ÚÎªµ¥Î»ÉèÖÃÄÚ´æµÄ
+//
 //	return 0;
 //}

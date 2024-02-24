@@ -46,14 +46,26 @@
 //参数指向的字符串必须要以'\0'结束。
 //注意函数的返回值为size_t，是无符号的。		size_t <==> unsigned int
 
-
-
-//模拟库函数strlen
-//方法一	计数器版本
-//int my_strlen(const char* str)			//加const 更安全
+//int main()
 //{
-//	assert(str != NULL);				//#include<assert.h>
-//	int count = 0;
+//	if (strlen("abc") - strlen("abcdef") > 0)
+//	{
+//		printf(">\n");
+//	}
+//	else
+//	{
+//		printf("<\n");
+//	}
+//
+//	return 0;
+//}
+
+////模拟库函数strlen
+////方法一	计数器版本
+//size_t my_strlen(const char* str)			// 加const 更安全
+//{
+//	assert(str != NULL);				// #include<assert.h>
+//	size_t count = 0;
 //	while (*str != '\0')
 //	{
 //		count++;
@@ -65,37 +77,44 @@
 ////方法三	指针-指针
 //int main()
 //{
-//	char arr[] = "abc";					//默认结尾有	/0
+//	char arr[] = "abc";					// 默认结尾有	'/0'
 //	//char arr[] = { 'a','b','c' };
-//	int len = my_strlen(arr);
+//	size_t len = my_strlen(arr);
 //	printf("%d\n", len);
+//
 //	return 0;
 //}
 
 
 
-//测试库函数strcpy
-char* strcpy(char* destination, const char* source);
+// 测试库函数strcpy
+//char* strcpy(char* destination, const char* source);
 //int main()
 //{
+//	char name[20] = { 0 };
+//	// strcpy(name, "zhangsan");
+//	strcpy(name, "zhang\0san");		// 拷贝到 '\0' 就会结束
+//	// name = "zhangsan";			// err, name 数组名是地址，地址是一个常量值，不能被赋值
+//	printf("%s\n", name);			// zhangsan 
+//
 //	char arr[20] = "########";
-//	//arr = "hello";				//这种写法是错误的
-//	char* p = "hello";				//这种写法允许，将“hello”的h的地址存放在p指针里
+//	// arr = "hello";				// 这种写法是错误的
+//	char* p = "hello";				// 这种写法允许，将“hello”的h的地址存放在p指针里
 //	printf("%s\n", arr);
-//	strcpy(arr, "hello");			//将“hello”存放在arr数组里		'\0'是strcpy拷贝停止的终止条件
+//	strcpy(arr, "hello");			// 将“hello”存放在arr数组里		'\0'是strcpy拷贝停止的终止条件
 //	printf("%s\n", arr);
 //
-//	char arr1[] = { 'a','b','c' };	//数组arr2中未存储 '\0'
-//	strcpy(arr, arr1);				//'\0'是strcpy拷贝停止的终止条件		arr2字符串中无'\0',所以不知道何时停止
+//	char arr1[] = { 'a','b','c' };	// 数组arr2中未存储 '\0'
+//	strcpy(arr, arr1);				// '\0'是strcpy拷贝停止的终止条件	arr2字符串中无'\0',所以不知道何时停止
 //	printf("%s\n", arr);
 //
 //	char* p1 = "hello world";
 //	char arr2[5] = "####";
-//	strcpy(arr2, p1);				//p1指针访问的内容大于arr2数组长度，虽然最后能正常打印出来，但是却溢出报错了
+//	strcpy(arr2, p1);				// p1指针访问的内容大于arr2数组长度，虽然最后能正常打印出来，但是却溢出报错了
 //	printf("%s\n", arr2);
 //
-//	char* str = "############";
-//	strcpy(str, p);					//目标字符串必须可以修改才能存入，而str是常量字符串，不能修改
+//	char* str = "############";		// str 和 p1 都是不可修改区域
+//	strcpy(str, p);					// err 目标字符串必须可以修改才能存入，而str是常量字符串，不能修改
 //	printf("%s\n", str);
 //	return 0;
 //}
@@ -106,7 +125,26 @@ char* strcpy(char* destination, const char* source);
 //学会模拟实现
 
 
-
+//模拟实现strcpy
+//char* my_strcpy(char* destination, const char* source)
+//{
+//	assert(destination != NULL);
+//	assert(source != NULL);
+//
+//	char* ret = destination;
+//	while (*destination++ = *source++);
+//	return ret;
+//}
+//
+//int main()
+//{
+//	char arr[20] = "################";
+//	//my_strcpy(arr, "hello world");
+//	//printf("%s\n", arr);
+//	printf("%s\n", my_strcpy(arr, "hello world"));
+//
+//	return 0;
+//}
 
 //strcat		字符串追加
 char* strcat(char* destination, const char* source);
@@ -126,7 +164,7 @@ char* strcat(char* destination, const char* source);
 //目标空间必须可修改
 
 
-//strcat 模拟实现
+////strcat 模拟实现
 //char* my_strcat(char* destination, const char* source)
 //{
 //	assert(destination != NULL);
@@ -134,33 +172,36 @@ char* strcat(char* destination, const char* source);
 //
 //	char* ret = destination;
 //	int i = 0;
+//	// 1. 找到目标空间的末尾 '\0'
 //	while (*destination != '\0')
 //	{
 //		destination++;
 //	}
+//	// 2. 拷贝字符串
 //	while (*source != '\0')
 //	{
 //		*destination = *source;
 //		destination++;
 //		source++;
 //	}
-//	//*destination = '\0';
+//	*destination = '\0';
 //
-//	//第二个while循环也可以写成
-//	//while ((*destination++ = *source++) != '\0');		//一行代码直接搞定
+//	// 第二个while循环也可以写成
+//	// while (*destination++ = *source++);		//一行代码直接搞定
 //
 //	return ret;					//返回的是目标空间的起始地址
 //}
+//
 //int main()
 //{
-//	char arr1[20] = "hello ";
-//	char arr2[] = "world";
+//	char arr1[20] = "hello";
+//	char arr2[] = " world";
 //	my_strcat(arr1, arr2);
 //	printf("%s\n", arr1);
-//	printf("%s\n", my_strcat(arr1, arr2));		//因为my_strcat返回的是目标字符串的起始地址，因此也可以这样使用
+//	printf("%s\n", my_strcat(arr1, arr2));		// 因为my_strcat返回的是目标字符串的起始地址，因此也可以这样使用
 //
-//	//my_strcat(arr1, arr1);
-//	//从底层逻辑上讲，strcat（）函数无法自己追加自己，因为在第一次追加的时候，已经将arr1里的结束标志‘\0’给覆盖掉了
+//	// my_strcat(arr1, arr1);
+//	// 从底层逻辑上讲，strcat（）函数无法自己追加自己，因为在第一次追加的时候，已经将arr1里的结束标志‘\0’给覆盖掉了
 //	return 0;
 //}
 
@@ -172,7 +213,7 @@ int strcmp(const char* str1, const char* str2);
 //{
 //	char* p = "obc";
 //	char* q = "abcdef";
-//	if (p > q)					//这种比较不行，这是在比较地址
+//	if (p > q)					// 这种比较不行，这是在比较地址
 //	{
 //		printf(">\n");
 //	}
@@ -181,12 +222,12 @@ int strcmp(const char* str1, const char* str2);
 //		printf("<=\n");
 //	}
 //
-//	if ("obc" > "abcdef")		//这种比较也不行，这也是在比较‘o’和‘a’的地址的大小
+//	if ("obc" > "abcdef")		// 这种比较也不行，这也是在比较‘o’和‘a’的地址的大小
 //	{
 //
 //	}
 //
-//	//strcmp	字符串比较大小的函数
+//	// strcmp	字符串比较大小的函数
 //	int ret1 = strcmp("abbb", "abq");
 //	printf("%d\n", ret1);					//小于返回 -1
 //
@@ -199,7 +240,7 @@ int strcmp(const char* str1, const char* str2);
 //}
 
 
-//模拟实现 strcmp
+//// 模拟实现 strcmp
 //int my_strcmp(const char* s1, const char* s2)
 //{
 //	assert(s1 != NULL && s2 != NULL);
@@ -221,12 +262,12 @@ int strcmp(const char* str1, const char* str2);
 //	{
 //		return -1;
 //	}
-//	//另一种写法，将上面if else语句换成		return *s1-*s2;
-//	//return *s1 - *s2;
+//	// 另一种写法，将上面if else语句换成		return *s1-*s2;
+//	// return *s1 - *s2;
 //}
 //int main()
 //{
-//	char* p = "abcdef";
+//	char* p = "abadef";
 //	char* q = "abbbb";
 //	//char* q = "abcdef";
 //	//char* q = "adaa";
@@ -280,7 +321,7 @@ strncmp
 //	return 0;
 //}
 
-//strncpy 实现
+//// strncpy 模拟实现
 //char* my_strncpy(char* dest, const char* src, size_t count)
 //{
 //	char* start = dest;
@@ -291,6 +332,7 @@ strncmp
 //			*dest++='\0';
 //	return start;
 //}
+//
 //int main()
 //{
 //	char arr1[20] = "abcdef";
@@ -310,7 +352,7 @@ char* strncat(char* destination, const char* source, size_t num);
 //
 //int main()
 //{
-//	char arr1[20] = "hello ";
+//	char arr1[20] = "hello \0xxxxx";
 //	char arr2[] = "world";
 //
 //	strncat(arr1, arr2, 6);
@@ -319,7 +361,7 @@ char* strncat(char* destination, const char* source, size_t num);
 //	return 0;
 //}
 
-//strncat	实现
+//// strncat 模拟实现
 //char* my_strncat(char* front, const char* back, size_t count)
 //{
 //	char* start = front;
@@ -333,7 +375,7 @@ char* strncat(char* destination, const char* source, size_t num);
 //}
 //int main()
 //{
-//	char arr1[20] = "hello ";
+//	char arr1[20] = "hello \0xxxx";
 //	char arr2[] = "world";
 //
 //	my_strncat(arr1, arr2, 6);
@@ -383,15 +425,71 @@ char* strncat(char* destination, const char* source, size_t num);
 //	return 0;
 //}
 
+//// strncmp 模拟实现
+//int my_strncmp(const char* s1, const char* s2, size_t count)
+//{
+//	assert(s1 != NULL && s2 != NULL);
+//
+//	while (count && *s1 && *s2)
+//	{
+//		if (*s1 != *s2)
+//		{
+//			return *s1 - *s2;
+//		}
+//		s1++;
+//		s2++;
+//		count--;
+//	}
+//	return 0;
+//}
+//int main()
+//{
+//	char* p = "abcdef";
+//	char* q = "abcqwert";
+//	int ret1 = strcmp(p, q);
+//	printf("%d\n", ret1);
+//	if (ret1 > 0)
+//	{
+//		printf("%s > %s\n", p, q);
+//	}
+//	else if (ret1 == 0)
+//	{
+//		printf("%s = %s\n", p, q);
+//	}
+//	else
+//	{
+//		printf("%s < %s\n", p, q);
+//	}
+//
+//	int ret2 = my_strncmp(p, q, 3);
+//	printf("%d\n", ret2);
+//	if (ret2 > 0)
+//	{
+//		printf("%s > %s\n", p, q);
+//	}
+//	else if (ret2 == 0)
+//	{
+//		printf("%s = %s\n", p, q);
+//	}
+//	else
+//	{
+//		printf("%s < %s\n", p, q);
+//	}
+//
+//	return 0;
+//}
 
 
-//strstr	在一个字符串中查找另一个字符串
+
+
+
+////strstr	在一个字符串中查找另一个字符串
 //int main()
 //{
 //	char arr1[] = "abcdefabcdef";
 //	char arr2[] = "bcd";
-//	//在arr1中查找是否包含arr2数组
-//	char* ret = strstr(arr1, arr2);			//在arr1中找arr2字符串，找到了，返回第一次找到的位置，没找到返回空指针
+//	// 在arr1中查找是否包含arr2数组
+//	char* ret = strstr(arr1, arr2);			// 在arr1中找arr2字符串，找到了，返回第一次找到的位置，没找到返回空指针
 //	if (ret == NULL)
 //	{
 //		printf("没找到\n");
@@ -400,11 +498,12 @@ char* strncat(char* destination, const char* source, size_t num);
 //	{
 //		printf("找到了：%s\n", ret);
 //	}
+//
 //	return 0;
 //}
 
 
-//strstr实现
+//// strstr实现
 //char* my_strstr(const char* str1, const char* str2)
 //{
 //	assert(str1 && str2);
@@ -429,12 +528,13 @@ char* strncat(char* destination, const char* source, size_t num);
 //	}
 //	return NULL;
 //}
+//
 //int main()
 //{
 //	char arr1[] = "abbbcdefabcdef";
 //	char arr2[] = "bbc";
 //	//在arr1中查找是否包含arr2数组
-//	char* ret = my_strstr(arr1, arr2);			//在arr1中找arr2字符串，找到了，返回第一次找到的位置，没找到返回空指针
+//	char* ret = my_strstr(arr1, arr2);		// 在arr1中找arr2字符串，找到了，返回第一次找到的位置，没找到返回空指针
 //	if (ret == NULL)
 //	{
 //		printf("没找到\n");
@@ -443,6 +543,7 @@ char* strncat(char* destination, const char* source, size_t num);
 //	{
 //		printf("找到了：%s\n", ret);
 //	}
+//
 //	return 0;
 //}
 
@@ -461,27 +562,34 @@ char* strtok(char* str, const char* sep);
 //strtok函数的第一个参数为NULL，函数将在同一个字符串中被保存的位置开始，查找下一个标记点。
 //如果字符串中不存在更多的标记，则返回NULL指针。
 
-//strtok		测试
+// strtok		测试
 //int main()
 //{
 //	char arr[] = "zpw@bitedu.tech";
-//	char* p = "@.";						//分隔符集合
+//	const char* sep = "@.";						// 分隔符集合
 //
 //	char tmp[20] = { 20 };
-//	strcpy(tmp, arr);					//由于strtok函数会修改被操作数，因此先最好临时拷贝一份
+//	strcpy(tmp, arr);					// 由于strtok函数会修改被操作数，因此先最好临时拷贝一份
 //
 //	char* ret = NULL;
-//	ret=strtok(tmp, p);					//将"zpw@bitedu.tech" --> "zpw\0bitedu.tech" ，并返回z地址
+//	ret=strtok(tmp, sep);					// 将"zpw@bitedu.tech" --> "zpw\0bitedu.tech" ，并返回z地址
 //	printf("%s\n", ret);
 //
-//	ret = strtok(NULL, p);				//bitedu.tech -->bitedu\0tech，并返回b地址
+//	ret = strtok(NULL, sep);				// bitedu.tech -->bitedu\0tech，并返回b地址
 //	printf("%s\n", ret);
 //
-//	ret = strtok(NULL, p);				//tech -->返回t地址
+//	ret = strtok(NULL, sep);				// tech -->返回t地址
 //	printf("%s\n", ret);
 //
-//	ret = strtok(NULL, p);				//如果字符串中不存在更多的标记，则返回NULL指针
+//	ret = strtok(NULL, sep);				// 如果字符串中不存在更多的标记，则返回NULL指针
 //	printf("%s\n", ret);
+//
+//	// -------------------------------------------
+//	strcpy(tmp, arr);
+//	for (ret = strtok(tmp, sep); ret != NULL; ret = strtok(NULL, sep))
+//	{
+//		printf("%s\n", ret);
+//	}
 //
 //	return 0;
 //}
@@ -504,7 +612,57 @@ char* strtok(char* str, const char* sep);
 //	return 0;
 //}
 
-
+////strtok		模拟实现
+//char* my_strtok(char* str, const char* sep)
+//{
+//	static char* p = NULL;
+//	if (str != NULL)
+//	{
+//		p = str;
+//	}
+//	else if (p == NULL)
+//	{
+//		return NULL;
+//	}
+//
+//	char* ret = p;
+//	while (*p)
+//	{
+//		const char* q = sep;
+//		while (*q)
+//		{
+//			if (*p == *q)
+//			{
+//				*p = '\0';
+//				p++;
+//				return ret;
+//			}
+//			q++;
+//		}
+//		p++;
+//	}
+//	p = NULL;
+//
+//	return ret;
+//}
+//
+//int main()
+//{
+//	char arr[] = "zpw@bitedu.tech hehe";
+//	char* p = "@. ";					// 分隔符集合
+//
+//	char tmp[30] = { 0 };
+//	strcpy(tmp, arr);					// 由于strtok函数会修改被操作数，因此先最好临时拷贝一份
+//
+//	char* ret = NULL;
+//
+//	for (ret = my_strtok(tmp, p); ret != NULL; ret = my_strtok(NULL, p))
+//	{
+//		printf("%s\n", ret);
+//	}
+//
+//	return 0;
+//}
 
 
 
@@ -526,23 +684,20 @@ char* strtok(char* str, const char* sep);
 //	printf("%s\n", strerror(4));
 //	printf("%s\n", strerror(5));
 //
-//	FILE* pf = fopen("test.txt", "r");		//打开文件成功，会返回一个有效的指针
-//											//打开文件失败，会返回NULL
+//	FILE* pf = fopen("test.txt", "r");		// 打开文件成功，会返回一个有效的指针；打开文件失败，会返回NULL
+//
+//	// errno  --  C语言标准库中定义的一个全局变量，用来存放错误码
 //	if (pf == NULL)
 //	{
-//		printf("%s\n", strerror(errno));	//strerror --> #include<string.h>	errno --> #include<errno.h>
-//		perror("foppen");					//这个函数不需要主动传	errno
-//											//把给定的自定义信息打印，加上：，再打印错误信息
+//		printf("%s\n", strerror(errno));	// strerror --> #include<string.h>	errno --> #include<errno.h>
+//		perror("foppen");					// 这个函数不需要主动传	errno
+//											// 把给定的自定义信息打印，加上：，再打印错误信息
 //		return 1;
 //	}
-//	//读文件
-//	//
-//	//关闭文件
 //
 //	fclose(pf);
 //	pf = NULL;
 //
-//	return 0;
 //	return 0;
 //}
 

@@ -47,18 +47,20 @@
 
 //int main()
 //{
-//	//假设开设10个整形的空间
-//	int arr[10];				//栈区
+//	// 假设开设10个整形的空间
+//	int arr[10];						// 栈区
 //	//动态内存开辟的
+//	//int* p = (int*)malloc(INT_MAX);	// 测试动态内存开辟失败
 //	int* p = (int*)malloc(10 * sizeof(int));
-//	//使用这些空间的时候
+//	// 使用这些空间的时候
 //	if (p == NULL)
 //	{
+//		printf("%s\n", strerror(errno));
 //		printf("malloc error\n");
 //		perror("main");
-//		return 0;
+//		return 1;
 //	}
-//	//可以使用了
+//	// 可以使用了
 //	int i = 0;
 //	for (i = 0; i < 10; i++)
 //	{
@@ -66,11 +68,11 @@
 //	}
 //	for (i = 0; i < 10; i++)
 //	{
-//		printf("%d ", p[i]);	//p[i] --> *(p+i)
+//		printf("%d ", p[i]);			// p[i] --> *(p+i)
 //	}
-//	//回收空间
-//	free(p);					//free() --> #include<stdlib.h>
-//	p = NULL;					//自己动手把p置成空指针
+//	// 回收空间
+//	free(p);							// free() --> #include<stdlib.h>
+//	p = NULL;							// 自己动手把p置成空指针
 //
 //	return 0;
 //}
@@ -92,7 +94,7 @@
 
 //int main()
 //{
-//	//malloc
+//	// malloc
 //	int* p = malloc(40);
 //	if (p == NULL)
 //	{
@@ -106,7 +108,7 @@
 //	free(p);
 //	p = NULL;
 //
-//	//calloc
+//	// calloc
 //	p = calloc(10,sizeof(int));
 //	if (p == NULL)
 //	{
@@ -146,22 +148,22 @@
 //		 这样函数返回的是一个新的内存地址。
 //int main()
 //{
-//	//calloc
+//	// calloc
 //	int* p = calloc(10,sizeof(int));
 //	if (p == NULL)
 //	{
 //		perror("main");
 //		return 1;
 //	}
-//	//使用
+//	// 使用
 //	int i = 0;
 //	for (i = 0; i < 10; i++)
 //	{
 //		*(p + i) = 5;
 //	}
-//	//这里需要p指向的空间更大，需要20个int空间
-//	//realloc调整空间
-//	int* ptr = realloc(p, 20 * sizeof(int));		//防止realloc申请失败，污染p指针
+//	// 这里需要p指向的空间更大，需要20个int空间
+//	// realloc调整空间
+//	int* ptr = realloc(p, 20 * sizeof(int));	// 防止realloc申请失败，污染p指针
 //	if (ptr != NULL)
 //	{
 //		p = ptr;
@@ -170,7 +172,7 @@
 //	free(p);
 //	p = NULL;
 //
-//	p = (int*)realloc(NULL, 40);		//当传入NULL时候，这里的功能类似与malloc，就是直接在堆区开辟40个字节
+//	p = (int*)realloc(NULL, 40);				// 当传入NULL时候，这里的功能类似与malloc，就是直接在堆区开辟40个字节
 //	free(p);
 //	p = NULL;
 //
@@ -197,13 +199,13 @@
 //	int i = 0;
 //	for (i = 0; i < 10; i++)
 //	{
-//		*(p + i) = i;		//如果p的值是NULL,就会出问题
+//		*(p + i) = i;	// 如果p的值是NULL,就会出问题
 //	}
 //
 //	return 0;
 //}
 
-//2.对动态开辟空间的越界访问
+// 2.对动态开辟空间的越界访问
 //int main()
 //{
 //	int* p = (int*)malloc(10 * sizeof(int));
@@ -212,9 +214,9 @@
 //		return 1;
 //	}
 //	int i = 0;
-//	for (i = 0; i < 40; i++)
+//	for (i = 0; i <= 10; i++)
 //	{
-//		*(p + i) = i;		//越界访问
+//		*(p + i) = i;		// 越界访问
 //	}
 //	free(p);
 //	return 0;
@@ -223,10 +225,10 @@
 //3.使用free释放非动态开辟的空间
 //int main()
 //{
-//	int arr[10] = { 0 };	//栈区
+//	int arr[10] = { 0 };	// 栈区
 //	int* p = arr;
 //
-//	free(p);				//使用free释放非动态开辟的空间		free头文件include<stdlib.h>
+//	free(p);				// 使用free释放非动态开辟的空间		free头文件include<stdlib.h>
 //	p = NULL;
 //	return 0;
 //}
@@ -254,18 +256,18 @@
 //int main()
 //{
 //	int* p = (int*)malloc(1000);
-//	//使用
-//	//释放
+//	// 使用
+//	// 释放
 //	free(p);
 //	p = NULL;
-//	//free（NULL）	free函数释放空指针，什么事情都不会发生
+//	// free（NULL）	free函数释放空指针，什么事情都不会发生
 //
-//	//释放
-//	free(p);			//不能多次释放
+//	// 释放
+//	free(p);			// 不能多次释放
 //	return 0;
 //}
 
-//6.动态开辟的空间忘记释放
+//// 6.动态开辟的空间忘记释放
 //void test()
 //{
 //	int* p = (int*)malloc(1000);
@@ -273,18 +275,20 @@
 //	{
 //		return;
 //	}
-//	//使用
+//	// 使用
 //
-//	//忘记释放
+//	// 忘记释放
 //}
+//
 //int main()
 //{
 //	test();
-//	//...
-//	//当使用完test，局部变量销毁，动态开辟的空间就失联了，造成了内存泄漏
+//	// ...
+//	// 当使用完test，局部变量销毁，动态开辟的空间就失联了，造成了内存泄漏
 //
 //	return 0;
 //}
+
 //动态开辟的空间，2中回收方式
 //1.主动free
 //2.程序结束
@@ -313,7 +317,7 @@
 //在GetMemory函数内部动态申请空间的地址，存放在p中，不会影响外边str，所以当GetMemory函数返回之后，str依然是空指针，。所以strcpy会失败。
 //当GetMemory函数返回之后，形参p销毁，使得动态开辟的100个字节错存在内存泄漏，无法释放。
 
-////改1：
+//// 改1：
 //char* GetMemory(char* p)
 //{
 //	p = (char*)malloc(100);			//因为是值传递，所以当函数调用完毕的时候，指向这个指针的函数会销毁，导致内存泄露
@@ -334,7 +338,7 @@
 //
 //	return 0;
 //}
-//改2：
+//// 改2：
 //void GetMemory(char** p)
 //{
 //	*p = (char*)malloc(100);			//因为是值传递，所以当函数调用完毕的时候，指向这个指针的函数会销毁，导致内存泄露
@@ -355,21 +359,31 @@
 //	return 0;
 //}
 
+//int main()
+//{
+//	printf("hello world\n");
+//	char* p = "hello world\n";
+//	printf(p);
+//	printf("%s", p);
+//
+//	return 0;
+//}
 
-
-//作业
+////作业
 //char* GetMemory(void)
 //{
-//	//返回栈空间的问题
-//	char p[] = "hello world";			//出了这个函数，这个数组就被释放了
+//	// 返回栈空间的问题
+//	char p[] = "hello world";			// 出了这个函数，这个数组就被释放了
 //	return p;
 //}
+//
 //void Test(void)
 //{
 //	char* str = NULL;
 //	str = GetMemory();
 //	printf(str);
 //}
+//
 //int main()
 //{
 //	Test();
@@ -393,11 +407,12 @@
 //《高质量的C++编程》
 
 
-//作业
+// 作业
 //void GetMemory(char** p, int num)
 //{
 //	*p = (char*)malloc(num);
 //}
+//
 //void Test(void)
 //{
 //	char* str = NULL;
@@ -409,6 +424,7 @@
 //	free(str);
 //	str = NULL;
 //}
+//
 //int main()
 //{
 //	Test();
@@ -426,7 +442,7 @@
 //2.堆区（heap）：	一般由程序员分配释放，若程序员不释放，程序结束时可能由OS回收。分配方式类似于链表。
 //3.数据段（静态区）（stack）存放全局变量、静态数据。程序结束后由系统释放。
 //4.代码段：存放函数体（类成员函数和全局函数）的二进制代码。
-
+//
 //实际上，普通的局部变量是在栈区分配空间的，栈区的特点是在上面创建的变量出了作用域就销毁。
 //但是被static修饰的变量存放在数据段（静态区），数据段的特点是在上面创建的变量，直到程序结束才销毁。
 //所以生命周期变长。
@@ -452,19 +468,19 @@
 //	int n;
 //	int arr[];			//大小是未知的
 //};
-//arr数组就叫柔性数组
+////arr数组就叫柔性数组
 //struct S
 //{
 //	int n;
-//	int arr[0];			//大小是未知的
+//	int arr[0];			// 大小是未知的
 //};
-////arr[0]	也可以将数组置成0
+//////arr[0]	也可以将数组置成0
 //int main()
 //{
 //	struct S s = { 0 };
-//	printf("%d\n", sizeof(s));			//sizeof返回的这种结构大小不包括柔性数组的内存
+//	printf("%d\n", sizeof(s));			// sizeof返回的这种结构大小不包括柔性数组的内存
 //
-//	//期望arr的大小是10个整型
+//	// 期望arr的大小是10个整型
 //	struct S* ps = (struct S*)malloc(sizeof(struct S) + 10 * sizeof(int));
 //	ps->n = 10;
 //	int i = 0;
@@ -473,15 +489,15 @@
 //		ps->arr[i] = i;
 //	}
 //
-//	//增加
-//	struct S* ptr = (struct S*)realloc(ps, sizeof(struct S) + 20 * sizeof(int));	//再增加20个int空间
+//	// 增加
+//	struct S* ptr = (struct S*)realloc(ps, sizeof(struct S) + 20 * sizeof(int));	// 再增加20个int空间
 //	if (ptr != NULL)
 //	{
 //		ps = ptr;
 //	}
-//	//使用
+//	// 使用
 //
-//	//释放
+//	// 释放
 //	free(ps);
 //	ps = NULL;
 //
@@ -493,12 +509,13 @@
 //2.sizeof返回的这种结构大小不包括柔性数组的内存。
 //3.包含柔性数组成员的结构用malloc（）函数进行内存的动态分配，并且分配的内存应该大于结构的大小，以适应柔性数组的预期大小。
 
-//用指针的方式达到柔性数组的模样
+//// 用指针的方式达到柔性数组的模样
 //struct S
 //{
 //	int n;
-//	int* arr;			//以指针的方式指向柔性数组
+//	int* arr;			// 以指针的方式指向柔性数组
 //};
+//
 //int main()
 //{
 //	struct S* ps = (struct S*)malloc(sizeof(struct S));

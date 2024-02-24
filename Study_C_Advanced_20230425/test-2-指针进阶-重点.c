@@ -72,6 +72,27 @@
 //	return 0;
 //}
 
+//int main()
+//{
+//	int arr1[] = { 1,2,3,4,5 };
+//	int arr2[] = { 2,3,4,5,6 };
+//	int arr3[] = { 3,4,5,6,7 };
+//
+//	int* parr[3] = { arr1,arr2,arr3 };
+//	int i = 0;
+//	for (i = 0; i < 3; i++)
+//	{
+//		int j = 0;
+//		for (j = 0; j < 5; j++)
+//		{
+//			//printf("%d ", *(parr[i] + j));
+//			printf("%d ", parr[i][j]);			// *(p+i) == p[i]
+//		}
+//		printf("\n");
+//	}
+//
+//	return 0;
+//}
 
 
 //指针数组：本质上是数组，存放指针的数组
@@ -145,14 +166,31 @@
 //{
 //	int arr[10] = { 0 };
 //
-//	int* p1 = arr;
-//	int(*p2)[10] = &arr;
+//	printf("%p\n", arr);
+//	printf("%p\n", arr+1);
+//	printf("\n");
+//	printf("%p\n", &arr[0]);
+//	printf("%p\n", &arr[0]+1);
+//	printf("\n");
+//	printf("%p\n", &arr);
+//	printf("%p\n", &arr+1);
+//	printf("\n");
+//
+//	int* p1 = arr;			
+//	int(*p2)[10] = &arr;	// 数组指针是用来存放数组的地址的
 //
 //	printf("%p\n", p1);
 //	printf("%p\n", p1+1);
+//	printf("\n");
 //
 //	printf("%p\n", p2);
 //	printf("%p\n", p2+1);
+//	printf("\n");
+//
+//	int sz = sizeof(arr);
+//	printf("%d\n", sz);
+//	printf("\n");
+//
 //	return 0;
 //}
 //数组名是数组首元素的地址
@@ -163,13 +201,21 @@
 //int main()
 //{
 //	int arr[10] = { 1,2,3,4,5,6,7,8,9,10 };
-//
-//	int(*pa)[10] = &arr;
 //	int i = 0;
+//	int* p = arr;
 //	for (i = 0; i < 10; i++)
 //	{
-//		printf("%d ", *((*pa) + i));			//一维数组不是很方便，一般不会这么写
+//		printf("%d ", *(p + i));
 //	}
+//
+//	int(*pa)[10] = &arr;
+//	for (i = 0; i < 10; i++)
+//	{
+//		// p指向数组的，*p其实就相当于数组名，数组名又是数组首元素的地址，*p本质上就是数组首元素地址
+//		// 一维数组不是很方便，一般不会这么写
+//		printf("%d ", *((*pa) + i));	
+//	}
+//
 //	return 0;
 //}
 
@@ -188,6 +234,7 @@
 //	}
 //	printf("\n");
 //}
+//
 //void print2(int(*p)[5], int r, int c)
 //{
 //	int i = 0;
@@ -196,12 +243,14 @@
 //	{
 //		for (j = 0; j < c; j++)
 //		{
-//			printf("%d ", *(*(p + i) + j));
+//			// printf("%d ", *(*(p + i) + j));
+//			printf("%d ", p[i][j]);
 //		}
 //		printf("\n");
 //	}
 //	printf("\n");
 //}
+//
 //int main()
 //{
 //	int arr[3][5] = { {1,2,3,4,5},{2,3,4,5,6},{3,4,5,6,7} };
@@ -585,26 +634,26 @@
 //作业
 //int main()
 //{
-//	//unsigned char 0~255
+//	// unsigned char 0~255
 //	unsigned char a = 200;
-//	//00000000 00000000 00000000 11001000
-//	//11001000
+//	// 00000000 00000000 00000000 11001000
+//	//							  11001000
 //	unsigned char b = 100;
-//	//00000000 00000000 00000000 01100100
-//	//01100100
+//	// 00000000 00000000 00000000 01100100
+//	//							  01100100
 //	unsigned char c = 0;
-//	//相加的时候，a和b要发生整型提升
-//	//无符号char整型提升，高位补0
-//	//a=00000000 00000000 00000000 11001000
-//	//b=00000000 00000000 00000000 01100100
-//	//c=00000000 00000000 00000001 00101100
-//	//  00101100									存储	高位溢出，丢了
+//	// 相加的时候，a和b要发生整型提升
+//	// 无符号char整型提升，高位补0
+//	// a = 00000000 00000000 00000000 11001000
+//	// b = 00000000 00000000 00000000 01100100
+//	// c = 00000000 00000000 00000001 00101100
+//	//								  00101100			存储	高位溢出，丢了
 //	c = a + b;
-//	printf("%d %d\n", a + b, c);
+//	printf("%d %d\n", a + b, c);	// 300 44
 //	return 0;
 //}
 
-//作业：打印杨辉三角
+////作业：打印杨辉三角
 //void print(int arr[10][10])
 //{
 //	int i = 0;
@@ -659,7 +708,7 @@
 //D说：C最后，我第三
 //E说：我第四，A第一
 //每位选手都说对了一半，请编程确定比赛名次
-
+//
 //int main()
 //{
 //	int a = 0;
@@ -727,6 +776,7 @@
 //{
 //	**ptr = 20;
 //}
+//
 //int main()
 //{
 //	int a = 10;
@@ -742,6 +792,23 @@
 //	int* arr[10] = { 0 };
 //	test(arr);				//传存放一级指针的数组也可以
 //	
+//	return 0;
+//}
+
+//void test(int** ptr)
+//{
+//	printf("num = %d\n", **ptr);
+//}
+//
+//int main()
+//{
+//	int n = 10;
+//	int* p = &n;
+//	int **pp = &p;
+//
+//	test(pp);
+//	test(&p);
+//
 //	return 0;
 //}
 
@@ -795,6 +862,11 @@ int(*p)[4];
 //	//函数名 ==& 函数名
 //
 //	int (*pf)(int, int) = &Add;			//pf 就是一个函数指针变量
+//	int ret = (*pf)(2, 3);
+//	printf("%d\n", ret);
+//	ret = pf(2, 3);
+//	printf("%d\n", ret);
+//
 //	return 0;
 //}
 
@@ -830,6 +902,27 @@ int(*p)[4];
 //	int ret3=pf(3, 5);						//这两种通过函数指针去调用函数的方法都可以，实际上*为摆设
 //	printf("%d\n", ret3);
 //	//int ret3 = *pf(3, 5);	//err
+//	return 0;
+//}
+
+//int test(const char* str)
+//{
+//	printf("test()\n");
+//	return 0;
+//}
+//
+//int main()
+//{
+//	// 函数指针 - 也是一种指针，是指向函数的指针
+//	printf("%p\n", &test);
+//	printf("%p\n", test);
+//
+//	int (*p)(const char*) = test;
+//	
+//	(*p)("hello world");
+//	test("hello world");
+//	p("hello world");
+//
 //	return 0;
 //}
 
@@ -901,23 +994,28 @@ int(*p)[4];
 //	printf("********        0.exit        ********\n");
 //	printf("**************************************\n");
 //}
+//
 //int Add(int x, int y)
 //{
 //	return x + y;
 //}
+//
 //int Sub(int x, int y)
 //{
 //	return x - y;
 //}
+//
 //int Mul(int x, int y)
 //{
 //	return x * y;
 //}
+//
 //int Div(int x, int y)
 //{
 //	return x / y;
 //}
-//常规实现方法
+
+// 常规实现方法
 //int main()
 //{
 //	int input = 0;
@@ -966,7 +1064,7 @@ int(*p)[4];
 //	return 0;
 //}
 
-//函数指针方法
+// 函数指针方法
 //int main()
 //{
 //	int input = 0;
@@ -1128,7 +1226,7 @@ int(* (*p3)[4])(int,int)=&p2；		//取出的是函数指针数组的地址
 
 //qsort函数 - 快速排序
 
-//冒泡排序
+////冒泡排序
 //void bubble_sort(int arr[], int sz)
 //{
 //	int i = 0;
@@ -1136,6 +1234,7 @@ int(* (*p3)[4])(int,int)=&p2；		//取出的是函数指针数组的地址
 //
 //	for (i = 0; i < sz - 1; i++)
 //	{
+//		int flag = 1;	// 假设数组是排好序的
 //		for (j = 0; j < sz - 1 - i; j++)
 //		{
 //			if (arr[j] > arr[j + 1])
@@ -1143,7 +1242,13 @@ int(* (*p3)[4])(int,int)=&p2；		//取出的是函数指针数组的地址
 //				int tmp = arr[j];
 //				arr[j] = arr[j + 1];
 //				arr[j + 1] = tmp;
+//
+//				flag = 0;
 //			}
+//		}
+//		if (flag == 1)
+//		{
+//			break;
 //		}
 //	}
 //}
@@ -1156,6 +1261,7 @@ int(* (*p3)[4])(int,int)=&p2；		//取出的是函数指针数组的地址
 //	}
 //	printf("\n");
 //}
+// 
 //int main()
 //{
 //	//升序
@@ -1180,48 +1286,77 @@ void qsort(
 );
 
 */
-#include<stdlib.h>
-#include<string.h>
+
+//int main()
+//{
+//	int a = 10;
+//	char* pa = &a;	// warning 从“int * ”到“char* ”的类型不兼容
+//
+//	void* pv = &a;	// void* 是无具体类型的指针，可以接受任意类型的地址
+//	// void* 是无具体类型的指针，所以不能解引用操作，也不能 +- 整数操作
+//
+//	return 0;
+//}
+
+//#include<stdlib.h>
+//#include<string.h>
+//
+//void print_arr(int arr[], int sz)
+//{
+//	int i = 0;
+//	for (i = 0; i < sz; i++)
+//	{
+//		printf("%d ", arr[i]);
+//	}
+//	printf("\n");
+//}
+//
 //int cmp_int(const void* e1, const void* e2)
 //{
 //	return *(int*)e1 - *(int*)e2;
 //}
+//
 //void test1()
 //{
-//	//整型数据的排序
+//	// 整型数据的排序
 //	int arr[] = { 9,8,7,6,5,4,3,2,1,0 };
 //	int sz = sizeof(arr) / sizeof(arr[0]);
 //
-//	//排序
+//	// 排序
 //	qsort(arr, sz, sizeof(arr[0]), cmp_int);
-//	//打印
+//	// 打印
 //	print_arr(arr, sz);
 //}
+//
 //struct Stu
 //{
 //	char name[20];
 //	int age;
 //};
+//
 //int sort_by_age(const void* e1, const void* e2)
 //{
 //	//return (*(struct Stu*)e1).age - (*(struct Stu*)e2).age;
-//	return ((struct Stu*)e1)->age - ((struct Stu*)e2)->age;			//这两种写法都可以
+//	return ((struct Stu*)e1)->age - ((struct Stu*)e2)->age;			// 这两种写法都可以
 //}
+//
 //int sort_by_name(const void* e1, const void* e2)
 //{
 //	return strcmp(((struct Stu*)e1)->name, ((struct Stu*)e2)->name);
 //}
+//
 //void test2()
 //{
-//	//使用qsort函数排序结构体数据
+//	// 使用qsort函数排序结构体数据
 //	struct Stu s[] = { {"zhangsan",30},{"lisi",34},{"wangwu",20} };
 //	int sz = sizeof(s) / sizeof(s[0]);
 //
-//	//按照年龄排序
+//	// 按照年龄排序
 //	qsort(s, sz, sizeof(s[0]), sort_by_age);
-//	//按照名字来排序
+//	// 按照名字来排序
 //	qsort(s, sz, sizeof(s[0]), sort_by_name);
 //}
+//
 //int main()
 //{
 //	test1();
@@ -1234,11 +1369,12 @@ void qsort(
 
 
 
-//模仿qsort实现一个冒泡排序的通用算法
+////模仿qsort实现一个冒泡排序的通用算法
 //int cmp_int(const void* e1, const void* e2)
 //{
 //	return *(int*)e1 - *(int*)e2;
 //}
+//
 //void print_arr(int arr[], int sz)
 //{
 //	int i = 0;
@@ -1248,6 +1384,7 @@ void qsort(
 //	}
 //	printf("\n");
 //}
+//
 //void Swap(char* buf1, char* buf2, int width)
 //{
 //	int i = 0;
@@ -1260,6 +1397,7 @@ void qsort(
 //		buf2++;
 //	}
 //}
+//
 //void bubble_sort(
 //	void* base,
 //	int sz,
@@ -1268,57 +1406,69 @@ void qsort(
 //)
 //{
 //	int i = 0;
-//	//趟数
+//	// 趟数
 //	for (i = 0; i < sz - 1; i++)
 //	{
-//		//一趟的排序
+//		int flag = 1;	// 假设数组是排好序的
+//		// 一趟的排序
 //		int j = 0;
 //		for (j = 0; j < sz - 1 - i; j++)
 //		{
 //			if (cmp((char*)base + j * width, (char*)base + (j + 1) * width) > 0)
 //			{
-//				//交换
+//				// 交换
 //				Swap((char*)base + j * width, (char*)base + (j + 1) * width, width);
+//				flag = 0;
 //			}
+//		}
+//		if (flag == 1)
+//		{
+//			break;
 //		}
 //	}
 //}
+//
 //void test3()
 //{
-//	//整型数据的排序
+//	// 整型数据的排序
 //	int arr[] = { 9,8,7,6,5,4,3,2,1,0 };
 //	int sz = sizeof(arr) / sizeof(arr[0]);
 //
-//	//排序
-//	bubble_sort(arr, sz, sizeof(arr[0]), cmp_int);			//使用自己开发的排序
-//	//打印
+//	// 排序
+//	bubble_sort(arr, sz, sizeof(arr[0]), cmp_int);			// 使用自己开发的排序
+//	// 打印
 //	print_arr(arr, sz);
 //}
+//
 //struct Stu
 //{
 //	char name[20];
 //	int age;
 //};
+//
 //int sort_by_age(const void* e1, const void* e2)
 //{
-//	//return (*(struct Stu*)e1).age - (*(struct Stu*)e2).age;
-//	return ((struct Stu*)e1)->age - ((struct Stu*)e2)->age;			//这两种写法都可以
+//	// return (*(struct Stu*)e1).age - (*(struct Stu*)e2).age;
+//	return ((struct Stu*)e1)->age - ((struct Stu*)e2)->age;	// 这两种写法都可以
 //}
+//
 //int sort_by_name(const void* e1, const void* e2)
 //{
 //	return strcmp(((struct Stu*)e1)->name, ((struct Stu*)e2)->name);
 //}
+//
 //void test4()
 //{
-//	//使用自己的函数排序结构体数据
+//	// 使用自己的函数排序结构体数据
 //	struct Stu s[] = { {"zhangsan",30},{"lisi",34},{"wangwu",20} };
 //	int sz = sizeof(s) / sizeof(s[0]);
 //
-//	//按照年龄排序
+//	// 按照年龄排序
 //	bubble_sort(s, sz, sizeof(s[0]), sort_by_age);
-//	//按照名字来排序
+//	// 按照名字来排序
 //	bubble_sort(s, sz, sizeof(s[0]), sort_by_name);
 //}
+//
 //int main()
 //{
 //	test3();
@@ -1486,15 +1636,16 @@ void qsort(
 //	short sDate;
 //	char cha[2];
 //	short sBa[4];
-//}*p;
-////假设p的值是0x100000.如下表表达式的值分别为多少？
-////已知，结构体Test类型的变量大小是20个字节
+//}*p = (struct Test*)0x100000;
+//// 假设p的值是0x100000.如下表表达式的值分别为多少？
+//// 已知，结构体Test类型的变量大小是20个字节
+//// x86
 //
 //int main()
 //{
-//	printf("%p\n", p + 0x1);						//+1其实+的是20个字节 0x100000+0x1=0x100014
-//	printf("%p\n", (unsigned long)p + 0x1);			//强制转换成unsigned long，加的就是1，0x100001
-//	printf("%p\n", (unsigned int*)p + 0x1);			//强制转换成unsigned int*，加1加的就是4字节，0x100004
+//	printf("%p\n", p + 0x1);						// +1其实+的是20个字节 0x100000+0x1=0x100014
+//	printf("%p\n", (unsigned long)p + 0x1);			// 强制转换成unsigned long，加的就是1，0x100001
+//	printf("%p\n", (unsigned int*)p + 0x1);			// 强制转换成unsigned int*，加1加的就是4字节，0x100004
 //
 //	return 0;
 //}
@@ -1544,10 +1695,10 @@ void qsort(
 //int main()
 //{
 //	int aa[2][5] = { 1,2,3,4,5,6,7,8,9,10 };
-//	int* ptr1 = (int*)(&aa + 1);						//&aa取整个数组地址，&aa + 1跳过了整个数组
-//	int* ptr2 = (int*)(*(aa + 1));						//aa为第一行地址，aa + 1指向第二行。
-//														//*(aa + 1)相当于aa[1]，也就是6的地址
-//	printf("%d,%d", *(ptr1 - 1), *(ptr2 - 1));			//10	5
+//	int* ptr1 = (int*)(&aa + 1);						// &aa取整个数组地址，&aa + 1跳过了整个数组
+//	int* ptr2 = (int*)(*(aa + 1));						// aa为第一行地址，aa + 1指向第二行。
+//														// *(aa + 1)相当于aa[1]，也就是6的地址
+//	printf("%d,%d", *(ptr1 - 1), *(ptr2 - 1));			// 10	5
 //
 //	return 0;
 //}
@@ -1559,7 +1710,7 @@ void qsort(
 //	char* a[] = { "work","at","alibaba" };
 //	char** pa = a;
 //	pa++;
-//	printf("%s\n", *pa);
+//	printf("%s\n", *pa);	// at
 //
 //	return 0;
 //}
@@ -1615,14 +1766,14 @@ p=NULL;
 //请编写程序在这样的矩阵中查找某个数字是否存在。
 //要求：时间复杂度小于o（N）
 
-//1 2 3
-//4 5 6
-//7 8 9
+////1 2 3
+////4 5 6
+////7 8 9
 //int main()
 //{
-//	int arr[3][3] = { 1,2,3,4,5,6,7,8,9 };		//N - 查找的次数最坏的情况下是N次，2N 3N
-//	//N*N   N*(N-1)  --  o(N^2)					o(1) -- 指的是不管N是几，遍历次数为常数次
-//	//查找一个数字，比如说找：7
+//	int arr[3][3] = { 1,2,3,4,5,6,7,8,9 };		// N - 查找的次数最坏的情况下是N次，2N 3N
+//	// N*N   N*(N-1)  --  o(N^2)					o(1) -- 指的是不管N是几，遍历次数为常数次
+//	// 查找一个数字，比如说找：7
 //	//遍历的方法时间复杂度o(N^2)，不满足要求
 //	int i = 0;
 //	int j = 0;
@@ -1638,7 +1789,7 @@ p=NULL;
 //	}
 //	return 0;
 //}
-
+//
 //int find_num(int arr[3][3], int r, int c,int k)
 //{
 //	int i = 0;
@@ -1660,7 +1811,7 @@ p=NULL;
 //	}
 //	return 0;
 //}
-
+//
 //int find_num(int arr[3][3], int* pr, int* pc, int k)
 //{
 //	int i = 0;
@@ -1709,6 +1860,59 @@ p=NULL;
 //数组
 //字符串
 //数据结构
+
+// 方法一
+//void left_rotate(char arr[], int k)
+//{
+//	int sz = strlen(arr);
+//	k %= sz;
+//	while (k--)
+//	{
+//		int tmp = arr[0];
+//		int i = 0;
+//		for (i = 0; i < sz - 1; i++)
+//		{
+//			arr[i] = arr[i + 1];
+//		}
+//		arr[i] = tmp;
+//	}
+//}
+
+// 方法二		三步翻转法
+//#include <assert.h>
+//void reverse(char* left, char* right)
+//{
+//	assert(left && right);
+//	while (left < right)
+//	{
+//		char tmp = *left;
+//		*left = *right;
+//		*right = tmp;
+//		left++;
+//		right--;
+//	}
+//}
+//
+//void left_rotate(char arr[], int k)
+//{
+//	int sz = strlen(arr);
+//	k %= sz;
+//	// 1. 先整体逆序
+//	reverse(arr, arr + k - 1);
+//	reverse(arr + k, arr + sz - 1);
+//	reverse(arr, arr + sz - 1);
+//}
+//
+//int main()
+//{
+//	char arr[] = "abcdef";	// cdefab
+//	int k = 0;
+//	scanf("%d", &k);
+//	left_rotate(arr, k);
+//	printf("%s\n", arr);
+//
+//	return 0;
+//}
 
 
 
@@ -1798,6 +2002,7 @@ p=NULL;
 //	}
 //	return 0;
 //}
+//
 //int main()
 //{
 //	char arr1[] = "AABCD";
@@ -1828,25 +2033,25 @@ p=NULL;
 //}
 
 //于是上上面的代码改进为：
-#include<assert.h>
-#include<stdlib.h>
-#include<string.h>
+//#include<assert.h>
+//#include<stdlib.h>
+//#include<string.h>
 //int is_string_rotate(char* str1, char* str2)
 //{
 //	assert(str1);
 //	assert(str2);
 //
-//	//长度不相等，肯定不是旋转得到
+//	// 长度不相等，肯定不是旋转得到
 //	if (strlen(str1) != strlen(str2))
 //	{
 //		return 0;
 //	}
-//	//1.str1字符串的后面追加一个str1
+//	// 1. str1字符串的后面追加一个str1
 //	int sz = strlen(str1);
-//	strncat(str1, str1, sz);			//将str1字符串后面再追加一串str1内容
-//	//printf("%s\n", str1);
-//	//2.判断str2是否为str1的字串
-//	char* ret = strstr(str1, str2);		//如果是字串，返回地址，如果不是，返回空指针
+//	strncat(str1, str1, sz);			// 将str1字符串后面再追加一串str1内容
+//	// printf("%s\n", str1);
+//	// 2. 判断str2是否为str1的字串
+//	char* ret = strstr(str1, str2);		// 如果是字串，返回地址，如果不是，返回空指针
 //	/*if (ret == NULL)
 //	{
 //		return 0;
@@ -1920,3 +2125,4 @@ CPP -> C实现简单的数据结构
 指针+结构体+动态管理
 
 */
+

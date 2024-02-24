@@ -41,51 +41,51 @@
 //书名，作者，出版社，定价，书号
 //比如学生：名字，年龄，电话，性别，住址
 
-//struct Book					//struct Book 是结构体类型
+//struct Book					// struct Book 是结构体类型
 //{
 //	char name[20];
 //	int price;
-//	char id[12];			//name，price，id 是结构体成员变量列表
-//}b4,b5,b6;					//变量b4,b5,b6	和 main（）函数里面创建的b1，b2，b3一样，
-							//但是区别在于b4,b5,b6是全局变量，b1，b2，b3是局部变量
+//	char id[12];			// name，price，id 是结构体成员变量列表
+//}b4,b5,b6;					// 变量b4,b5,b6	和 main（）函数里面创建的b1，b2，b3一样，
+//							// 但是区别在于b4,b5,b6是全局变量，b1，b2，b3是局部变量
 //int main()
 //{
-//	struct Book b1;			//利用struct Book结构体类型创建变量b1，b2，b3
-//	struct Book b2;			//b1，b2，b3是局部变量
+//	struct Book b1;			// 利用struct Book结构体类型创建变量b1，b2，b3
+//	struct Book b2;			// b1，b2，b3是局部变量
 //	struct Book b3;
 //
 //	return 0;
 //}
 
 
-//不完全声明
-//匿名结构体类型
-//struct						//可以不写标签名
+// 不完全声明
+// 匿名结构体类型
+//struct				// 可以不写标签名
 //{
 //	char c;
 //	int i;
 //	char ch;
 //	double d;
-//}s;							//通过结构体类型创建的全局变量来使用
+//}s;					// 通过结构体类型创建的全局变量来使用
 //
-//struct						//可以不写标签名
+//struct				// 可以不写标签名
 //{
 //	char c;
 //	int i;
 //	char ch;
 //	double d;
-//}*ps;						//ps指针变量，指向结构体类型的地址
+//}*ps;					// ps指针变量，指向结构体类型的地址
 //
 //int main()
 //{
-//	ps = &s;				//编译器会报错，虽然两个结构体一样，但是编译器任然会把这两个结构体当作是两个不同的结构体
+//	ps = &s;			// 编译器会报错，虽然两个结构体一样，但是编译器任然会把这两个结构体当作是两个不同的结构体
 //	return 0;
 //}
-//匿名结构体只能使用一次
+// 匿名结构体只能使用一次
 
 
 
-//结构体的自引用			结构体里可以包含结构体
+////结构体的自引用			结构体里可以包含结构体
 //struct A
 //{
 //	int i;
@@ -94,13 +94,13 @@
 //struct B
 //{
 //	char c;
-//	struct A sa;			//一个结构体里可以包含另一个结构体
+//	struct A sa;			// 一个结构体里可以包含另一个结构体
 //	double d;
 //};
 //struct N
 //{
 //	int d;
-//	struct N n;				//一个结构体里面不能包含自己，
+//	struct N n;				// 一个结构体里面不能包含自己，
 //};
 
 //数据结构
@@ -113,18 +113,32 @@
 //struct Node
 //{
 //	int d;
-//	struct Node* next;		//一个结构体里面可以包含同类型指针，来达到自引用
+//	struct Node* next;		// 一个结构体里面可以包含同类型指针，来达到自引用
 //};
 
+//// 1
+//typedef struct Node
+//{
+//	int d;
+//	struct Node* next;
+//}* linklist;
+//
+//// 2
+//struct Node
+//{
+//	int d;
+//	struct Node* next;
+//};
+//typedef struct Node* linklist;
 
 
-
-//结构体变量的定义和初始化
+// 结构体变量的定义和初始化
 //struct S
 //{
 //	char c;
 //	int i;
 //}s1,s2;
+//
 //struct B
 //{
 //	double d;
@@ -143,57 +157,78 @@
 //	return 0;
 //}
 
-
-
-
-//结构体内存对齐
+//#include <stddef.h>
+//struct S1		// 16
+//{
+//	char c1;
+//	int i;
+//	char c2;
+//};
 //
-//struct S
+//int main()
+//{
+//	printf("%d\n", sizeof(struct S1));			// 12
+//
+//	printf("%d\n", offsetof(struct S1, c1));	// 0
+//	printf("%d\n", offsetof(struct S1, i));		// 4
+//	printf("%d\n", offsetof(struct S1, c2));	// 8
+//
+//	return 0;
+//}
+
+
+//// 结构体内存对齐
+//struct S1		// 16
 //{
 //	int i;
 //	char c;
 //	double a;
 //};
-//struct S2
+//
+//struct S2		// 12
 //{
 //	char c1;
 //	int i;
 //	char c2;
 //};
-//struct S3
+//
+//struct S3		// 8
 //{
 //	char c1;
 //	char c2;
 //	int i;
 //};
-//struct S4
+//
+//struct S4		// 16
 //{
 //	double d;
 //	char c;
 //	int i;
 //};
+//
 //struct S5
 //{
 //	char c1;
 //	struct S4 s4;
 //	double d;
 //};
+//
 //int main()
 //{
-//	struct S s = { 0 };						//不完全初始化
-//	printf("%d\n", sizeof(s));				//涉及结构体内存对齐的问题
+//	struct S s = { 0 };				// 不完全初始化
+//	printf("%d\n", sizeof(s));		// 16	涉及结构体内存对齐的问题
 //
 //	struct S2 s2 = { 0 };
-//	printf("%d\n", sizeof(s2));
+//	printf("%d\n", sizeof(s2));		// 12
 //
 //	struct S3 s3 = { 0 };
-//	printf("%d\n", sizeof(s3));
+//	printf("%d\n", sizeof(s3));		// 8
 //
 //	struct S4 s4 = { 0 };
-//	printf("%d\n", sizeof(s4));
+//	printf("%d\n", sizeof(s4));		// 16
 //
 //	struct S5 s5 = { 0 };
-//	printf("%d\n", sizeof(s5));
+//	printf("%d\n", sizeof(s5));		// 32
 //
 //	return 0;
 //}
@@ -226,23 +261,22 @@
 
 
 
-//修改默认对齐数
-//默认对齐数是8
-// 
-//把默认对齐数改为2
-
-//#pragma pack(2)				//把默认对齐数改为2
+// 修改默认对齐数
+// 默认对齐数是8
+// 把默认对齐数改为2
+//#pragma pack(2)		// 把默认对齐数改为2
 //struct S
 //{
 //	char c1;
 //	int i;
 //	char c2;
 //};
-//#pragma pack()				//把默认对齐数又改回来
+//#pragma pack()		// 把默认对齐数又改回来
+//
 //int main()
 //{
 //
-//	printf("%d\n", sizeof(struct S));
+//	printf("%d\n", sizeof(struct S));	// 12	-->		8
 //
 //	return 0;
 //}
@@ -267,28 +301,41 @@
 
 
 
-//结构体传参
+//// 结构体传参
 //struct S
 //{
 //	int data[1000];
 //	int num;
 //};
-////结构体传参
+//
+//// 结构体传参
 //void print1(struct S s)					//改变这里面的参数，不会改变源参数
 //{
+//	int i = 0;
+//	for (i = 0; i < 3; i++)
+//	{
+//		printf("%d ", s.data[i]);
+//	}
 //	printf("%d\n", s.num);
 //}
+//
 ////结构体地址传参
 //void print2(struct S* ps)				//效率高，节省空间
 //{
+//	int i = 0;
+//	for (i = 0; i < 3; i++)
+//	{
+//		printf("%d ", ps->data[i]);
+//	}
 //	printf("%d\n", ps->num);
 //}
+//
 //int main()
 //{
 //	struct S s = { {1,2,3,4},1000 };
-//	print1(s);
-//	print2(&s);
-//	//printf("%d\n", sizeof(struct S));
+//	print1(s);		// 传值传参
+//	print2(&s);		// 传址传参
+//	// printf("%d\n", sizeof(struct S));
 //	return 0;
 //}
 
@@ -303,12 +350,13 @@
 //struct A
 //{
 //	//4个字节 - 32bit
-//	int _a : 2;			//_a	占2个比特位
-//	int _b : 5;			//_b	占5个比特位
-//	int _c : 10;		//_c	占10个比特位
-//	//4个字节 - 32bit
-//	int _d : 30;		//_d	占30个比特位
+//	int _a : 2;			// _a	占2个比特位
+//	int _b : 5;			// _b	占5个比特位
+//	int _c : 10;		// _c	占10个比特位
+//	// 4个字节 - 32bit
+//	int _d : 30;		// _d	占30个比特位
 //};
+// 
 //int main()
 //{
 //	printf("%d", sizeof(struct A));			//2+5+10+30=47bit
@@ -329,14 +377,14 @@
 //int main()
 //{
 //	struct S s = { 0 };
-//	s.a = 10;					//10 --> 1010	截取010放到开辟的一个新字节	-->	00000010
-//	s.b = 12;					//12 --> 1100	上一个字节还能放得下，直接放进去 --> 01100010 -->6进制 --> 6 2
-//								//一个字节内部从高位往地位放置
-//	s.c = 3;					//3 --> 00011	上一个字节只剩1位，放不下，开辟一个新字节 -->00000011 -->16进制--> 0 3
-//	s.d = 4;					//4 --> 0100	上一个字节只剩3位，放不下，开辟一个新字节 -->00000100 -->16进制--> 0 4
-//								//最后存在内存中的是	01100010	00000011	00000100
-//								//			16进制数为	6	2		0	3		0	4
-//	//大小端讨论的是字节的顺序
+//	s.a = 10;	// 10 --> 1010	截取010放到开辟的一个新字节	-->	00000010
+//	s.b = 12;	// 12 --> 1100	上一个字节还能放得下，直接放进去 --> 01100010 -->6进制 --> 6 2
+//				// 一个字节内部从高位往地位放置
+//	s.c = 3;	// 3 --> 00011	上一个字节只剩1位，放不下，开辟一个新字节 -->00000011 -->16进制--> 0 3
+//	s.d = 4;	// 4 --> 0100	上一个字节只剩3位，放不下，开辟一个新字节 -->00000100 -->16进制--> 0 4
+//				// 最后存在内存中的是	01100010	00000011	00000100
+//				//		16进制数为		6	2		0	3		0	4
+//	// 大小端讨论的是字节的顺序
 //	printf("%d", sizeof(struct S));
 //
 //	return 0;
@@ -346,7 +394,7 @@
 //2.位段中最大位的数目不能确定。（16位机器最大16位，32位机器最大32，写成27，在16位机器会出问题。）
 //3.位段中的成员在内存中从左向右分配，还是从右向左分配标准尚未定义
 //4.当一个结构包含两个位段，第二个位段成员比较大，无法容纳于第一个位段剩余的位时，是舍弃剩余位还是利用，这是不确定的。
-
+//
 //总结：跟结构相比，位段可以达到同样的效果，但是可以很好的节省空间，但是有跨平台的问题存在。
 
 //位段的应用
@@ -430,12 +478,13 @@
 //联合体也是一种特殊的自定义类型
 //这种类型定义的变量也包含一系列的成员，特征是这些成员公用同一块空间（所以联合也叫共用体）
 
-//定义联合体	关键字		union
+// 定义联合体	关键字		union
 //union Un				//联合体类型的定义
 //{
 //	char c;
 //	int i;
 //};
+//
 //int main()
 //{
 //	union Un u = { 10 };			//创建联合体类型的变量
@@ -453,7 +502,7 @@
 
 
 
-//一般方法		判断大端小端
+//// 一般方法		判断大端小端
 //int check_sys()
 //{
 //	int a = 1;
@@ -466,7 +515,7 @@
 //		return 0;			//大端
 //	}
 //}
-//使用联合体方法
+//// 使用联合体方法
 //int check_sys()
 //{
 //	union U
@@ -476,9 +525,10 @@
 //	}u;
 //	u.i = 1;
 //	return u.c;
-//	//返回1 就是小端
-//	//返回0 就是大端
+//	// 返回1 就是小端
+//	// 返回0 就是大端
 //}
+//
 //int main()
 //{
 //	int ret = check_sys();
